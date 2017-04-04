@@ -70,7 +70,9 @@ void jobTransmitCallback(osjob_t* j)
         // Voltage = Value * (2^3) * 3.3 / 1024;
         data[0] = (uint8_t)(analogRead(PIN_BATTERY) >> 2);
 
-        // Save last RSSI.
+        // Save last RSSI
+        // Actual RSSI: (Value - 64)
+        // radio.c (l.786), RFM95 (5.5.5, p82)
         data[1] = (uint8_t)(LMIC.rssi);
 
         // Transmit encoded data (unconfirmed).
