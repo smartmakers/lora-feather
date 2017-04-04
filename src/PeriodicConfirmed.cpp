@@ -6,15 +6,15 @@
 /* Behavior Parameters */
 
 // Period between two data transmissions (seconds) if there is no change in the inputs.
-#define TRANSMIT_PERIOD 10
+#define TRANSMIT_PERIOD 5
 
 /* LoRa Parameters */
 
-// APPEUI: Application ID (LSBF)
-static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
 // DEVEUI: Unique device ID (LSBF)
 static const u1_t DEVEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+// APPEUI: Application ID (LSBF)
+static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // APPKEY: Device-specific AES key.
 static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
@@ -58,12 +58,12 @@ static osjob_t job_transmit;
 
 void jobTransmitCallback(osjob_t* j)
 {
-    Serial.print(os_getTime());
-    Serial.println(F(": transmit"));
-
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("ERROR: OP_TXRXPEND, not sending"));
     } else {
+
+        Serial.print(os_getTime());
+        Serial.println(F(": TXDATA"));
 
         // Save battery level.
         // To decode on the server side:
@@ -77,9 +77,6 @@ void jobTransmitCallback(osjob_t* j)
 
         // Transmit encoded data (unconfirmed).
         LMIC_setTxData2(1, data, sizeof(data), 1);
-
-        // Fast blinking while trying to send something.
-        wave_generator_apply(gen, led_fast_blink);
     }
     // Next TX is scheduled after TX_COMPLETE event.
 }
@@ -109,29 +106,52 @@ void onEvent (ev_t ev) {
             // Disable link check validation.
             LMIC_setLinkCheckMode(0);
 
-            // Transmit first ping directly.
+            // Manually setup additional channels.
+            LMIC_setupChannel(3, 867100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
+            LMIC_setupChannel(4, 867300000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
+            LMIC_setupChannel(5, 867500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
+            LMIC_setupChannel(6, 867700000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
+            LMIC_setupChannel(7, 867900000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
+            LMIC_setupChannel(8, 868800000, DR_RANGE_MAP(DR_FSK,  DR_FSK),  BAND_MILLI);      // g2-band
+
+            // Schedule first transmission.
             os_setCallback( &job_transmit, &jobTransmitCallback );
 
             break;
 
+        case EV_TXSTART:
+            Serial.println(F("EV_TXSTART"));
+
+            // Fast blinking while trying to send something.
+            wave_generator_apply(gen, led_fast_blink);
+
+            break;
+
+        case EV_NORX:
+            Serial.println(F("EV_NORX"));
+
+            // Slow blinking until next start.
+            wave_generator_apply(gen, led_slow_blink);
+
+            break;
+
         case EV_TXCOMPLETE:
-            Serial.println(F("EV_TXCOMPLETE"));
+            Serial.print(F("EV_TXCOMPLETE : "));
 
             // Check for received acknowledge.
             if (LMIC.txrxFlags & TXRX_ACK) {
-                Serial.println(F("Received ack"));
+                Serial.println(F("ack"));
 
                 // While connected, short blink.
                 wave_generator_apply(gen, led_short_blink);
-            }
-            if (LMIC.txrxFlags & TXRX_NACK) {
-                Serial.println(F("Ack not received"));
+            } else {
+                Serial.println(F("no ack"));
 
                 // Slow blinking while disconnected.
                 wave_generator_apply(gen, led_slow_blink);
             }
 
-            // Schedule next transmission (maximum period).
+            // Schedule next transmission.
             os_setTimedCallback( &job_transmit, os_getTime() + sec2osticks(TRANSMIT_PERIOD), &jobTransmitCallback );
 
             break;
@@ -150,7 +170,7 @@ void onEvent (ev_t ev) {
 }
 
 void setup() {
-//    while (!Serial);
+    while (!Serial);
 
     Serial.begin(9600);
     delay(100);

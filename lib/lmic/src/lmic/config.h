@@ -84,12 +84,9 @@
 /* Debug options (not in compliance with the regulations) */
 
 // Enable this to ignore the duty cyle limitations on the radio emissions .
-#define LMIC_IGNORE_DUTY_CYCLE
+//#define LMIC_IGNORE_DUTY_CYCLE
 
-// Enable this for a quick join (only two attempts at SF12, highest power).
-#define ENABLE_QUICK_JOIN
-
-// Enable this for quick confirmed tx (1 attempt instead of 8).
-//#define DISABLE_TX_RETRIES
+// Increase the duty cycle allowance by the specified factor.
+#define LMIC_FACTOR_DUTY_CYCLE 4
 
 #endif // _lmic_config_h_

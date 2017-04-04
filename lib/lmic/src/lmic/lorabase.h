@@ -1,13 +1,29 @@
-/*******************************************************************************
- * Copyright (c) 2014-2015 IBM Corporation.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/*
+ * Copyright (c) 2014-2016 IBM Corporation.
+ * All rights reserved.
  *
- * Contributors:
- *    IBM Zurich Research Lab - initial API, implementation and documentation
- *******************************************************************************/
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the <organization> nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #ifndef _lorabase_h_
 #define _lorabase_h_
@@ -71,17 +87,17 @@ enum { DR_PAGE = DR_PAGE_EU868 };
 //  g3 :  10%  27dBm
 //                 freq             band     datarates
 enum { EU868_F1 = 868100000,      // g1   SF7-12
-       EU868_F2 = 868300000,      // g1   SF7-12 FSK SF7/250
-       EU868_F3 = 868500000,      // g1   SF7-12
-       EU868_F4 = 868850000,      // g2   SF7-12
-       EU868_F5 = 869050000,      // g2   SF7-12
-       EU868_F6 = 869525000,      // g3   SF7-12
-       EU868_J4 = 864100000,      // g2   SF7-12  used during join
-       EU868_J5 = 864300000,      // g2   SF7-12   ditto
-       EU868_J6 = 864500000,      // g2   SF7-12   ditto
+    EU868_F2 = 868300000,      // g1   SF7-12 FSK SF7/250
+    EU868_F3 = 868500000,      // g1   SF7-12
+    EU868_F4 = 868850000,      // g2   SF7-12
+    EU868_F5 = 869050000,      // g2   SF7-12
+    EU868_F6 = 869525000,      // g3   SF7-12
+    EU868_J4 = 864100000,      // g2   SF7-12  used during join
+    EU868_J5 = 864300000,      // g2   SF7-12   ditto
+    EU868_J6 = 864500000,      // g2   SF7-12   ditto
 };
 enum { EU868_FREQ_MIN = 863000000,
-       EU868_FREQ_MAX = 870000000 };
+    EU868_FREQ_MAX = 870000000 };
 
 enum { CHNL_PING         = 5 };
 enum { FREQ_PING         = EU868_F6 };  // default ping freq

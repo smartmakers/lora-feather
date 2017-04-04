@@ -1,13 +1,29 @@
-/*******************************************************************************
- * Copyright (c) 2014-2015 IBM Corporation.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/*
+ * Copyright (c) 2014-2016 IBM Corporation.
+ * All rights reserved.
  *
- * Contributors:
- *    IBM Zurich Research Lab - initial API, implementation and documentation
- *******************************************************************************/
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the <organization> nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 //! \file
 #ifndef _oslmic_h_
@@ -220,32 +236,32 @@ u2_t os_crc16 (xref2u1_t d, uint len);
 #define TABLE_GET_U1_TWODIM(table, index1, index2) table_get_u1(RESOLVE_TABLE(table)[index1], index2)
 
 #if defined(__AVR__)
-    #include <avr/pgmspace.h>
-    // Macro to define the getter functions. This loads data from
-    // progmem using pgm_read_xx, or accesses memory directly when the
-    // index is a constant so gcc can optimize it away;
-    #define TABLE_GETTER(postfix, type, pgm_type) \
+#include <avr/pgmspace.h>
+// Macro to define the getter functions. This loads data from
+// progmem using pgm_read_xx, or accesses memory directly when the
+// index is a constant so gcc can optimize it away;
+#define TABLE_GETTER(postfix, type, pgm_type) \
         inline type table_get ## postfix(const type *table, size_t index) { \
             if (__builtin_constant_p(table[index])) \
                 return table[index]; \
             return pgm_read_ ## pgm_type(&table[index]); \
         }
 
-    TABLE_GETTER(_u1, u1_t, byte);
-    TABLE_GETTER(_s1, s1_t, byte);
-    TABLE_GETTER(_u2, u2_t, word);
-    TABLE_GETTER(_s2, s2_t, word);
-    TABLE_GETTER(_u4, u4_t, dword);
-    TABLE_GETTER(_s4, s4_t, dword);
+TABLE_GETTER(_u1, u1_t, byte);
+TABLE_GETTER(_s1, s1_t, byte);
+TABLE_GETTER(_u2, u2_t, word);
+TABLE_GETTER(_s2, s2_t, word);
+TABLE_GETTER(_u4, u4_t, dword);
+TABLE_GETTER(_s4, s4_t, dword);
 
-    // This assumes ostime_t is 4 bytes, so error out if it is not
-    typedef int check_sizeof_ostime_t[(sizeof(ostime_t) == 4) ? 0 : -1];
-    TABLE_GETTER(_ostime, ostime_t, dword);
+// This assumes ostime_t is 4 bytes, so error out if it is not
+typedef int check_sizeof_ostime_t[(sizeof(ostime_t) == 4) ? 0 : -1];
+TABLE_GETTER(_ostime, ostime_t, dword);
 
-    // For AVR, store constants in PROGMEM, saving on RAM usage
-    #define CONST_TABLE(type, name) const type PROGMEM RESOLVE_TABLE(name)
+// For AVR, store constants in PROGMEM, saving on RAM usage
+#define CONST_TABLE(type, name) const type PROGMEM RESOLVE_TABLE(name)
 #else
-    inline u1_t table_get_u1(const u1_t *table, size_t index) { return table[index]; }
+inline u1_t table_get_u1(const u1_t *table, size_t index) { return table[index]; }
     inline s1_t table_get_s1(const s1_t *table, size_t index) { return table[index]; }
     inline u2_t table_get_u2(const u2_t *table, size_t index) { return table[index]; }
     inline s2_t table_get_s2(const s2_t *table, size_t index) { return table[index]; }

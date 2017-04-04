@@ -1,13 +1,29 @@
-/*******************************************************************************
- * Copyright (c) 2014-2015 IBM Corporation.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/*
+ * Copyright (c) 2014-2016 IBM Corporation.
+ * All rights reserved.
  *
- * Contributors:
- *    IBM Zurich Research Lab - initial API, implementation and documentation
- *******************************************************************************/
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the <organization> nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 //! \file
 #include "lmic.h"
@@ -217,20 +233,20 @@ static void aes_sessKeys (u2_t devnonce, xref2cu1_t artnonce, xref2u1_t nwkkey, 
 CONST_TABLE(u1_t, maxFrameLens) [] = { 64,64,64,123 };
 
 CONST_TABLE(u1_t, _DR2RPS_CRC)[] = {
-    ILLEGAL_RPS,
-    (u1_t)MAKERPS(SF12, BW125, CR_4_5, 0, 0),
-    (u1_t)MAKERPS(SF11, BW125, CR_4_5, 0, 0),
-    (u1_t)MAKERPS(SF10, BW125, CR_4_5, 0, 0),
-    (u1_t)MAKERPS(SF9,  BW125, CR_4_5, 0, 0),
-    (u1_t)MAKERPS(SF8,  BW125, CR_4_5, 0, 0),
-    (u1_t)MAKERPS(SF7,  BW125, CR_4_5, 0, 0),
-    (u1_t)MAKERPS(SF7,  BW250, CR_4_5, 0, 0),
-    (u1_t)MAKERPS(FSK,  BW125, CR_4_5, 0, 0),
-    ILLEGAL_RPS
+        ILLEGAL_RPS,
+        (u1_t)MAKERPS(SF12, BW125, CR_4_5, 0, 0),
+        (u1_t)MAKERPS(SF11, BW125, CR_4_5, 0, 0),
+        (u1_t)MAKERPS(SF10, BW125, CR_4_5, 0, 0),
+        (u1_t)MAKERPS(SF9,  BW125, CR_4_5, 0, 0),
+        (u1_t)MAKERPS(SF8,  BW125, CR_4_5, 0, 0),
+        (u1_t)MAKERPS(SF7,  BW125, CR_4_5, 0, 0),
+        (u1_t)MAKERPS(SF7,  BW250, CR_4_5, 0, 0),
+        (u1_t)MAKERPS(FSK,  BW125, CR_4_5, 0, 0),
+        ILLEGAL_RPS
 };
 
 static CONST_TABLE(s1_t, TXPOWLEVELS)[] = {
-    20, 14, 11, 8, 5, 2, 0,0, 0,0,0,0, 0,0,0,0
+        20, 14, 11, 8, 5, 2, 0,0, 0,0,0,0, 0,0,0,0
 };
 #define pow2dBm(mcmd_ladr_p1) (TABLE_GET_S1(TXPOWLEVELS, (mcmd_ladr_p1&MCMD_LADR_POW_MASK)>>MCMD_LADR_POW_SHIFT))
 
@@ -263,15 +279,15 @@ CONST_TABLE(u1_t, _DR2RPS_CRC)[] = {
 #endif // ================================================
 
 static CONST_TABLE(u1_t, SENSITIVITY)[7][3] = {
-    // ------------bw----------
-    // 125kHz    250kHz    500kHz
-    { 141-109,  141-109, 141-109 },  // FSK
-    { 141-127,  141-124, 141-121 },  // SF7
-    { 141-129,  141-126, 141-123 },  // SF8
-    { 141-132,  141-129, 141-126 },  // SF9
-    { 141-135,  141-132, 141-129 },  // SF10
-    { 141-138,  141-135, 141-132 },  // SF11
-    { 141-141,  141-138, 141-135 }   // SF12
+        // ------------bw----------
+        // 125kHz    250kHz    500kHz
+        { 141-109,  141-109, 141-109 },  // FSK
+        { 141-127,  141-124, 141-121 },  // SF7
+        { 141-129,  141-126, 141-123 },  // SF8
+        { 141-132,  141-129, 141-126 },  // SF9
+        { 141-135,  141-132, 141-129 },  // SF10
+        { 141-138,  141-135, 141-132 },  // SF11
+        { 141-141,  141-138, 141-135 }   // SF12
 };
 
 int getSensitivity (rps_t rps) {
@@ -283,7 +299,7 @@ ostime_t calcAirTime (rps_t rps, u1_t plen) {
     u1_t sf = getSf(rps);  // 0=FSK, 1..6 = SF7..12
     if( sf == FSK ) {
         return (plen+/*preamble*/5+/*syncword*/3+/*len*/1+/*crc*/2) * /*bits/byte*/8
-            * (s4_t)OSTICKS_PER_SEC / /*kbit/s*/50000;
+               * (s4_t)OSTICKS_PER_SEC / /*kbit/s*/50000;
     }
     u1_t sfx = 4*(sf+(7-SF7));
     u1_t q = sfx - (sf >= SF11 ? 8 : 0);
@@ -347,10 +363,10 @@ extern inline int   sameSfBw (rps_t r1, rps_t r2);
 //  - indexed by retry count
 //  - return steps to lower DR
 static CONST_TABLE(u1_t, DRADJUST)[2+TXCONF_ATTEMPTS] = {
-    // normal frames - 1st try / no retry
-    0,
-    // confirmed frames
-    0,0,1,0,1,0,1,0,0
+        // normal frames - 1st try / no retry
+        0,
+        // confirmed frames
+        0,0,1,0,1,0,1,0,0
 };
 
 
@@ -368,14 +384,14 @@ static CONST_TABLE(u1_t, DRADJUST)[2+TXCONF_ATTEMPTS] = {
 static CONST_TABLE(ostime_t, DR2HSYM_osticks)[] = {
 #if defined(CFG_eu868)
 #define dr2hsym(dr) (TABLE_GET_OSTIME(DR2HSYM_osticks, (dr)))
-    us2osticksRound(128<<7),  // DR_SF12
-    us2osticksRound(128<<6),  // DR_SF11
-    us2osticksRound(128<<5),  // DR_SF10
-    us2osticksRound(128<<4),  // DR_SF9
-    us2osticksRound(128<<3),  // DR_SF8
-    us2osticksRound(128<<2),  // DR_SF7
-    us2osticksRound(128<<1),  // DR_SF7B
-    us2osticksRound(80)       // FSK -- not used (time for 1/2 byte)
+        us2osticksRound(128<<7),  // DR_SF12
+        us2osticksRound(128<<6),  // DR_SF11
+        us2osticksRound(128<<5),  // DR_SF10
+        us2osticksRound(128<<4),  // DR_SF9
+        us2osticksRound(128<<3),  // DR_SF8
+        us2osticksRound(128<<2),  // DR_SF7
+        us2osticksRound(128<<1),  // DR_SF7B
+        us2osticksRound(80)       // FSK -- not used (time for 1/2 byte)
 #elif defined(CFG_us915)
 #define dr2hsym(dr) (TABLE_GET_OSTIME(DR2HSYM_osticks, (dr)&7))  // map DR_SFnCR -> 0-6
     us2osticksRound(128<<5),  // DR_SF10   DR_SF12CR
@@ -536,10 +552,10 @@ void LMIC_setPingable (u1_t intvExp) {
 //
 enum { NUM_DEFAULT_CHANNELS=3 };
 static CONST_TABLE(u4_t, iniChannelFreq)[6] = {
-    // Join frequencies and duty cycle limit (0.1%)
-    EU868_F1|BAND_MILLI, EU868_F2|BAND_MILLI, EU868_F3|BAND_MILLI,
-    // Default operational frequencies
-    EU868_F1|BAND_CENTI, EU868_F2|BAND_CENTI, EU868_F3|BAND_CENTI,
+        // Join frequencies and duty cycle limit (0.1%)
+        EU868_F1|BAND_MILLI, EU868_F2|BAND_MILLI, EU868_F3|BAND_MILLI,
+        // Default operational frequencies
+        EU868_F1|BAND_CENTI, EU868_F2|BAND_CENTI, EU868_F3|BAND_CENTI,
 };
 
 static void initDefaultChannels (bit_t join) {
@@ -636,7 +652,7 @@ static void updateTx (ostime_t txbeg) {
 #ifdef LMIC_IGNORE_DUTY_CYCLE
     band->avail = txbeg + airtime;
 #else
-    band->avail = txbeg + airtime * band->txcap;
+    band->avail = txbeg + airtime * (band->txcap/LMIC_FACTOR_DUTY_CYCLE);
 #endif
     if( LMIC.globalDutyRate != 0 )
         LMIC.globalDutyAvail = txbeg + (airtime<<LMIC.globalDutyRate);
@@ -685,11 +701,7 @@ static void setBcnRxParams (void) {
 static void initJoinLoop (void) {
     LMIC.txChnl = os_getRndU1() % 3;
     LMIC.adrTxPow = 14;
-#ifdef ENABLE_QUICK_JOIN
-    setDrJoin(DRCHG_SET, DR_SF12);
-#else
     setDrJoin(DRCHG_SET, DR_SF7);
-#endif
     initDefaultChannels(1);
     ASSERT((LMIC.opmode & OP_NEXTCHNL)==0);
     LMIC.txend = LMIC.bands[BAND_MILLI].avail + rndDelay(8);
@@ -717,12 +729,12 @@ static ostime_t nextJoinState (void) {
     if( time - LMIC.bands[BAND_MILLI].avail < 0 )
         time = LMIC.bands[BAND_MILLI].avail;
     LMIC.txend = time +
-        (isTESTMODE()
-         // Avoid collision with JOIN ACCEPT @ SF12 being sent by GW (but we missed it)
-         ? DNW2_SAFETY_ZONE
-         // Otherwise: randomize join (street lamp case):
-         // SF12:255, SF11:127, .., SF7:8secs
-         : DNW2_SAFETY_ZONE+rndDelay(255>>LMIC.datarate));
+                 (isTESTMODE()
+                  // Avoid collision with JOIN ACCEPT @ SF12 being sent by GW (but we missed it)
+                  ? DNW2_SAFETY_ZONE
+                  // Otherwise: randomize join (street lamp case):
+                  // SF12:255, SF11:127, .., SF7:8secs
+                  : DNW2_SAFETY_ZONE+rndDelay(255>>LMIC.datarate));
     // 1 - triggers EV_JOIN_FAILED event
     return failed;
 }
@@ -1035,7 +1047,7 @@ static bit_t decodeFrame (void) {
                             e_.eui    = MAIN::CDEV->getEui(),
                             e_.info   = dlen < 4 ? 0 : os_rlsbf4(&d[dlen-4]),
                             e_.info2  = hdr + (dlen<<8)));
-      norx:
+        norx:
 #if LMIC_DEBUG_LEVEL > 0
         printf("%lu: Invalid downlink, window=%s\n", os_getTime(), window);
 #endif
@@ -1130,47 +1142,47 @@ static bit_t decodeFrame (void) {
     int oidx = 0;
     while( oidx < olen ) {
         switch( opts[oidx] ) {
-        case MCMD_LCHK_ANS: {
-            //int gwmargin = opts[oidx+1];
-            //int ngws = opts[oidx+2];
-            oidx += 3;
-            continue;
-        }
-        case MCMD_LADR_REQ: {
-            u1_t p1     = opts[oidx+1];            // txpow + DR
-            u2_t chmap  = os_rlsbf2(&opts[oidx+2]);// list of enabled channels
-            u1_t chpage = opts[oidx+4] & MCMD_LADR_CHPAGE_MASK;     // channel page
-            u1_t uprpt  = opts[oidx+4] & MCMD_LADR_REPEAT_MASK;     // up repeat count
-            oidx += 5;
+            case MCMD_LCHK_ANS: {
+                //int gwmargin = opts[oidx+1];
+                //int ngws = opts[oidx+2];
+                oidx += 3;
+                continue;
+            }
+            case MCMD_LADR_REQ: {
+                u1_t p1     = opts[oidx+1];            // txpow + DR
+                u2_t chmap  = os_rlsbf2(&opts[oidx+2]);// list of enabled channels
+                u1_t chpage = opts[oidx+4] & MCMD_LADR_CHPAGE_MASK;     // channel page
+                u1_t uprpt  = opts[oidx+4] & MCMD_LADR_REPEAT_MASK;     // up repeat count
+                oidx += 5;
 
-            LMIC.ladrAns = 0x80 |     // Include an answer into next frame up
-                MCMD_LADR_ANS_POWACK | MCMD_LADR_ANS_CHACK | MCMD_LADR_ANS_DRACK;
-            if( !mapChannels(chpage, chmap) )
-                LMIC.ladrAns &= ~MCMD_LADR_ANS_CHACK;
-            dr_t dr = (dr_t)(p1>>MCMD_LADR_DR_SHIFT);
-            if( !validDR(dr) ) {
-                LMIC.ladrAns &= ~MCMD_LADR_ANS_DRACK;
-                EV(specCond, ERR, (e_.reason = EV::specCond_t::BAD_MAC_CMD,
-                                   e_.eui    = MAIN::CDEV->getEui(),
-                                   e_.info   = Base::lsbf4(&d[pend]),
-                                   e_.info2  = Base::msbf4(&opts[oidx-4])));
+                LMIC.ladrAns = 0x80 |     // Include an answer into next frame up
+                               MCMD_LADR_ANS_POWACK | MCMD_LADR_ANS_CHACK | MCMD_LADR_ANS_DRACK;
+                if( !mapChannels(chpage, chmap) )
+                    LMIC.ladrAns &= ~MCMD_LADR_ANS_CHACK;
+                dr_t dr = (dr_t)(p1>>MCMD_LADR_DR_SHIFT);
+                if( !validDR(dr) ) {
+                    LMIC.ladrAns &= ~MCMD_LADR_ANS_DRACK;
+                    EV(specCond, ERR, (e_.reason = EV::specCond_t::BAD_MAC_CMD,
+                                       e_.eui    = MAIN::CDEV->getEui(),
+                                       e_.info   = Base::lsbf4(&d[pend]),
+                                       e_.info2  = Base::msbf4(&opts[oidx-4])));
+                }
+                if( (LMIC.ladrAns & 0x7F) == (MCMD_LADR_ANS_POWACK | MCMD_LADR_ANS_CHACK | MCMD_LADR_ANS_DRACK) ) {
+                    // Nothing went wrong - use settings
+                    LMIC.upRepeat = uprpt;
+                    setDrTxpow(DRCHG_NWKCMD, dr, pow2dBm(p1));
+                }
+                LMIC.adrChanged = 1;  // Trigger an ACK to NWK
+                continue;
             }
-            if( (LMIC.ladrAns & 0x7F) == (MCMD_LADR_ANS_POWACK | MCMD_LADR_ANS_CHACK | MCMD_LADR_ANS_DRACK) ) {
-                // Nothing went wrong - use settings
-                LMIC.upRepeat = uprpt;
-                setDrTxpow(DRCHG_NWKCMD, dr, pow2dBm(p1));
+            case MCMD_DEVS_REQ: {
+                LMIC.devsAns = 1;
+                oidx += 1;
+                continue;
             }
-            LMIC.adrChanged = 1;  // Trigger an ACK to NWK
-            continue;
-        }
-        case MCMD_DEVS_REQ: {
-            LMIC.devsAns = 1;
-            oidx += 1;
-            continue;
-        }
-        case MCMD_DN2P_SET: {
+            case MCMD_DN2P_SET: {
 #if !defined(DISABLE_MCMD_DN2P_SET)
-            dr_t dr = (dr_t)(opts[oidx+1] & 0x0F);
+                dr_t dr = (dr_t)(opts[oidx+1] & 0x0F);
             u4_t freq = convFreq(&opts[oidx+2]);
             LMIC.dn2Ans = 0x80;   // answer pending
             if( validDR(dr) )
@@ -1184,12 +1196,12 @@ static bit_t decodeFrame (void) {
                 DO_DEVDB(LMIC.dn2Freq,dn2Freq);
             }
 #endif // !DISABLE_MCMD_DN2P_SET
-            oidx += 5;
-            continue;
-        }
-        case MCMD_DCAP_REQ: {
+                oidx += 5;
+                continue;
+            }
+            case MCMD_DCAP_REQ: {
 #if !defined(DISABLE_MCMD_DCAP_REQ)
-            u1_t cap = opts[oidx+1];
+                u1_t cap = opts[oidx+1];
             // A value cap=0xFF means device is OFF unless enabled again manually.
             if( cap==0xFF )
                 LMIC.opmode |= OP_SHUTDOWN;  // stop any sending
@@ -1199,23 +1211,23 @@ static bit_t decodeFrame (void) {
             LMIC.dutyCapAns = 1;
             oidx += 2;
 #endif // !DISABLE_MCMD_DCAP_REQ
-            continue;
-        }
-        case MCMD_SNCH_REQ: {
+                continue;
+            }
+            case MCMD_SNCH_REQ: {
 #if !defined(DISABLE_MCMD_SNCH_REQ)
-            u1_t chidx = opts[oidx+1];  // channel
+                u1_t chidx = opts[oidx+1];  // channel
             u4_t freq  = convFreq(&opts[oidx+2]); // freq
             u1_t drs   = opts[oidx+5];  // datarate span
             LMIC.snchAns = 0x80;
             if( freq != 0 && LMIC_setupChannel(chidx, freq, DR_RANGE_MAP(drs&0xF,drs>>4), -1) )
                 LMIC.snchAns |= MCMD_SNCH_ANS_DRACK|MCMD_SNCH_ANS_FQACK;
 #endif // !DISABLE_MCMD_SNCH_REQ
-            oidx += 6;
-            continue;
-        }
-        case MCMD_PING_SET: {
+                oidx += 6;
+                continue;
+            }
+            case MCMD_PING_SET: {
 #if !defined(DISABLE_MCMD_PING_SET) && !defined(DISABLE_PING)
-            u4_t freq = convFreq(&opts[oidx+1]);
+                u4_t freq = convFreq(&opts[oidx+1]);
             u1_t flags = 0x80;
             if( freq != 0 ) {
                 flags |= MCMD_PING_ANS_FQACK;
@@ -1226,12 +1238,12 @@ static bit_t decodeFrame (void) {
             }
             LMIC.pingSetAns = flags;
 #endif // !DISABLE_MCMD_PING_SET && !DISABLE_PING
-            oidx += 4;
-            continue;
-        }
-        case MCMD_BCNI_ANS: {
+                oidx += 4;
+                continue;
+            }
+            case MCMD_BCNI_ANS: {
 #if !defined(DISABLE_MCMD_BCNI_ANS) && !defined(DISABLE_BEACONS)
-            // Ignore if tracking already enabled
+                // Ignore if tracking already enabled
             if( (LMIC.opmode & OP_TRACK) == 0 ) {
                 LMIC.bcnChnl = opts[oidx+3];
                 // Enable tracking - bcninfoTries
@@ -1255,9 +1267,9 @@ static bit_t decodeFrame (void) {
                                      e_.time    = MAIN::CDEV->ostime2ustime(LMIC.bcninfo.txtime + BCN_INTV_osticks)));
             }
 #endif // !DISABLE_MCMD_BCNI_ANS && !DISABLE_BEACONS
-            oidx += 4;
-            continue;
-        }
+                oidx += 4;
+                continue;
+            }
         }
         EV(specCond, ERR, (e_.reason = EV::specCond_t::BAD_MAC_CMD,
                            e_.eui    = MAIN::CDEV->getEui(),
@@ -1287,7 +1299,7 @@ static bit_t decodeFrame (void) {
                            e_.port    = port,
                            e_.plen    = dlen,
                            e_.opts.length = olen,
-                           memcpy(&e_.opts[0], opts, olen)));
+                memcpy(&e_.opts[0], opts, olen)));
     } else {
         EV(specCond, INFO, (e_.reason = EV::specCond_t::DNSEQNO_REPLAY,
                             e_.eui    = MAIN::CDEV->getEui(),
@@ -1296,11 +1308,11 @@ static bit_t decodeFrame (void) {
     }
 
     if( // NWK acks but we don't have a frame pending
-        (ackup && LMIC.txCnt == 0) ||
-        // We sent up confirmed and we got a response in DNW1/DNW2
-        // BUT it did not carry an ACK - this should never happen
-        // Do not resend and assume frame was not ACKed.
-        (!ackup && LMIC.txCnt != 0) ) {
+            (ackup && LMIC.txCnt == 0) ||
+            // We sent up confirmed and we got a response in DNW1/DNW2
+            // BUT it did not carry an ACK - this should never happen
+            // Do not resend and assume frame was not ACKed.
+            (!ackup && LMIC.txCnt != 0) ) {
         EV(specCond, ERR, (e_.reason = EV::specCond_t::SPURIOUS_ACK,
                            e_.eui    = MAIN::CDEV->getEui(),
                            e_.info   = seqno,
@@ -1426,7 +1438,7 @@ static bit_t processJoinAccept (void) {
     ASSERT((LMIC.opmode & OP_TXRXPEND)!=0);
 
     if( LMIC.dataLen == 0 ) {
-      nojoinframe:
+        nojoinframe:
         if( (LMIC.opmode & OP_JOINING) == 0 ) {
             ASSERT((LMIC.opmode & OP_REJOIN) != 0);
             // REJOIN attempt for roaming
@@ -1460,7 +1472,7 @@ static bit_t processJoinAccept (void) {
                            e_.eui    = MAIN::CDEV->getEui(),
                            e_.info   = dlen < 4 ? 0 : mic,
                            e_.info2  = hdr + (dlen<<8)));
-      badframe:
+        badframe:
         if( (LMIC.txrxFlags & TXRX_DNW1) != 0 )
             return 0;
         goto nojoinframe;
@@ -1468,7 +1480,7 @@ static bit_t processJoinAccept (void) {
     aes_encrypt(LMIC.frame+1, dlen-1);
     if( !aes_verifyMic0(LMIC.frame, dlen-4) ) {
         EV(specCond, ERR, (e_.reason = EV::specCond_t::JOIN_BAD_MIC,
-                           e_.info   = mic));
+                e_.info   = mic));
         goto badframe;
     }
 
@@ -1660,7 +1672,7 @@ static void buildDataFrame (void) {
         LMIC.adrChanged = 0;
     }
 #if !defined(DISABLE_MCMD_PING_SET) && !defined(DISABLE_PING)
-    if( LMIC.pingSetAns != 0 ) {
+        if( LMIC.pingSetAns != 0 ) {
         LMIC.frame[end+0] = MCMD_PING_ANS;
         LMIC.frame[end+1] = LMIC.pingSetAns & ~MCMD_PING_ANS_RFU;
         end += 2;
@@ -1668,7 +1680,7 @@ static void buildDataFrame (void) {
     }
 #endif // !DISABLE_MCMD_PING_SET && !DISABLE_PING
 #if !defined(DISABLE_MCMD_SNCH_REQ)
-    if( LMIC.snchAns ) {
+        if( LMIC.snchAns ) {
         LMIC.frame[end+0] = MCMD_SNCH_ANS;
         LMIC.frame[end+1] = LMIC.snchAns & ~MCMD_SNCH_ANS_RFU;
         end += 2;
@@ -1685,8 +1697,8 @@ static void buildDataFrame (void) {
     }
     LMIC.frame[OFF_DAT_HDR] = HDR_FTYPE_DAUP | HDR_MAJOR_V1;
     LMIC.frame[OFF_DAT_FCT] = (LMIC.dnConf | LMIC.adrEnabled
-                              | (LMIC.adrAckReq >= 0 ? FCT_ADRARQ : 0)
-                              | (end-OFF_DAT_OPTS));
+                               | (LMIC.adrAckReq >= 0 ? FCT_ADRARQ : 0)
+                               | (end-OFF_DAT_OPTS));
     os_wlsbf4(LMIC.frame+OFF_DAT_ADDR,  LMIC.devaddr);
 
     if( LMIC.txCnt == 0 ) {
@@ -1715,7 +1727,7 @@ static void buildDataFrame (void) {
         os_copyMem(LMIC.frame+end+1, LMIC.pendTxData, dlen);
         aes_cipher(LMIC.pendTxPort==0 ? LMIC.nwkKey : LMIC.artKey,
                    LMIC.devaddr, LMIC.seqnoUp-1,
-                   /*up*/0, LMIC.frame+end+1, dlen);
+                /*up*/0, LMIC.frame+end+1, dlen);
     }
     aes_appendMic(LMIC.nwkKey, LMIC.devaddr, LMIC.seqnoUp-1, /*up*/0, LMIC.frame, flen-4);
 
@@ -1729,7 +1741,7 @@ static void buildDataFrame (void) {
                        e_.port    = LMIC.pendTxPort,
                        e_.plen    = txdata ? dlen : 0,
                        e_.opts.length = end-LORA::OFF_DAT_OPTS,
-                       memcpy(&e_.opts[0], LMIC.frame+LORA::OFF_DAT_OPTS, end-LORA::OFF_DAT_OPTS)));
+            memcpy(&e_.opts[0], LMIC.frame+LORA::OFF_DAT_OPTS, end-LORA::OFF_DAT_OPTS)));
     LMIC.dataLen = flen;
 }
 
@@ -1882,7 +1894,7 @@ static bit_t processDnData (void) {
     ASSERT((LMIC.opmode & OP_TXRXPEND)!=0);
 
     if( LMIC.dataLen == 0 ) {
-      norx:
+        norx:
         if( LMIC.txCnt != 0 ) {
             if( LMIC.txCnt < TXCONF_ATTEMPTS ) {
                 LMIC.txCnt += 1;
@@ -1890,6 +1902,7 @@ static bit_t processDnData (void) {
                 // Schedule another retransmission
                 txDelay(LMIC.rxtime, RETRY_PERIOD_secs);
                 LMIC.opmode &= ~OP_TXRXPEND;
+                ON_LMIC_EVENT(EV_NORX);
                 engineUpdate();
                 return 1;
             }
@@ -1901,7 +1914,7 @@ static bit_t processDnData (void) {
         if( LMIC.adrAckReq != LINK_CHECK_OFF )
             LMIC.adrAckReq += 1;
         LMIC.dataBeg = LMIC.dataLen = 0;
-      txcomplete:
+        txcomplete:
         LMIC.opmode &= ~(OP_TXDATA|OP_TXRXPEND);
         if( (LMIC.txrxFlags & (TXRX_DNW1|TXRX_DNW2|TXRX_PING)) != 0  &&  (LMIC.opmode & OP_LINKDEAD) != 0 ) {
             LMIC.opmode &= ~OP_LINKDEAD;
@@ -2104,7 +2117,7 @@ static void engineUpdate (void) {
                                         e_.info2  = 0));
                     // Device has to react! NWK will not roll over and just stop sending.
                     // Thus, we have N frames to detect a possible lock up.
-                  reset:
+                    reset:
                     os_setCallback(&LMIC.osjob, FUNC_ADDR(runReset));
                     return;
                 }
@@ -2125,6 +2138,7 @@ static void engineUpdate (void) {
             LMIC.opmode = (LMIC.opmode & ~(OP_POLL|OP_RNDTX)) | OP_TXRXPEND | OP_NEXTCHNL;
             updateTx(txbeg);
             os_radio(RADIO_TX);
+            ON_LMIC_EVENT(EV_TXSTART);
             return;
         }
         // Cannot yet TX
@@ -2176,7 +2190,7 @@ static void engineUpdate (void) {
     return;
 #endif // !DISABLE_BEACONS
 
-  txdelay:
+    txdelay:
     EV(devCond, INFO, (e_.reason = EV::devCond_t::TX_DELAY,
                        e_.eui    = MAIN::CDEV->getEui(),
                        e_.info   = osticks2ms(txbeg-now),

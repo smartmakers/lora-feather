@@ -1,13 +1,29 @@
-/*******************************************************************************
- * Copyright (c) 2014-2015 IBM Corporation.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/*
+ * Copyright (c) 2014-2016 IBM Corporation.
+ * All rights reserved.
  *
- * Contributors:
- *    IBM Zurich Research Lab - initial API, implementation and documentation
- *******************************************************************************/
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the <organization> nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "lmic.h"
 
@@ -318,44 +334,44 @@ static void configLoraModem () {
     sf_t sf = getSf(LMIC.rps);
 
 #ifdef CFG_sx1276_radio
-        u1_t mc1 = 0, mc2 = 0, mc3 = 0;
+    u1_t mc1 = 0, mc2 = 0, mc3 = 0;
 
-        switch (getBw(LMIC.rps)) {
+    switch (getBw(LMIC.rps)) {
         case BW125: mc1 |= SX1276_MC1_BW_125; break;
         case BW250: mc1 |= SX1276_MC1_BW_250; break;
         case BW500: mc1 |= SX1276_MC1_BW_500; break;
         default:
             ASSERT(0);
-        }
-        switch( getCr(LMIC.rps) ) {
+    }
+    switch( getCr(LMIC.rps) ) {
         case CR_4_5: mc1 |= SX1276_MC1_CR_4_5; break;
         case CR_4_6: mc1 |= SX1276_MC1_CR_4_6; break;
         case CR_4_7: mc1 |= SX1276_MC1_CR_4_7; break;
         case CR_4_8: mc1 |= SX1276_MC1_CR_4_8; break;
         default:
             ASSERT(0);
-        }
+    }
 
-        if (getIh(LMIC.rps)) {
-            mc1 |= SX1276_MC1_IMPLICIT_HEADER_MODE_ON;
-            writeReg(LORARegPayloadLength, getIh(LMIC.rps)); // required length
-        }
-        // set ModemConfig1
-        writeReg(LORARegModemConfig1, mc1);
+    if (getIh(LMIC.rps)) {
+        mc1 |= SX1276_MC1_IMPLICIT_HEADER_MODE_ON;
+        writeReg(LORARegPayloadLength, getIh(LMIC.rps)); // required length
+    }
+    // set ModemConfig1
+    writeReg(LORARegModemConfig1, mc1);
 
-        mc2 = (SX1272_MC2_SF7 + ((sf-1)<<4));
-        if (getNocrc(LMIC.rps) == 0) {
-            mc2 |= SX1276_MC2_RX_PAYLOAD_CRCON;
-        }
-        writeReg(LORARegModemConfig2, mc2);
+    mc2 = (SX1272_MC2_SF7 + ((sf-1)<<4));
+    if (getNocrc(LMIC.rps) == 0) {
+        mc2 |= SX1276_MC2_RX_PAYLOAD_CRCON;
+    }
+    writeReg(LORARegModemConfig2, mc2);
 
-        mc3 = SX1276_MC3_AGCAUTO;
-        if ((sf == SF11 || sf == SF12) && getBw(LMIC.rps) == BW125) {
-            mc3 |= SX1276_MC3_LOW_DATA_RATE_OPTIMIZE;
-        }
-        writeReg(LORARegModemConfig3, mc3);
+    mc3 = SX1276_MC3_AGCAUTO;
+    if ((sf == SF11 || sf == SF12) && getBw(LMIC.rps) == BW125) {
+        mc3 |= SX1276_MC3_LOW_DATA_RATE_OPTIMIZE;
+    }
+    writeReg(LORARegModemConfig3, mc3);
 #elif CFG_sx1272_radio
-        u1_t mc1 = (getBw(LMIC.rps)<<6);
+    u1_t mc1 = (getBw(LMIC.rps)<<6);
 
         switch( getCr(LMIC.rps) ) {
         case CR_4_5: mc1 |= SX1272_MC1_CR_4_5; break;
@@ -533,9 +549,9 @@ static void starttx () {
 enum { RXMODE_SINGLE, RXMODE_SCAN, RXMODE_RSSI };
 
 static CONST_TABLE(u1_t, rxlorairqmask)[] = {
-    [RXMODE_SINGLE] = IRQ_LORA_RXDONE_MASK|IRQ_LORA_RXTOUT_MASK,
-    [RXMODE_SCAN]   = IRQ_LORA_RXDONE_MASK,
-    [RXMODE_RSSI]   = 0x00,
+        [RXMODE_SINGLE] = IRQ_LORA_RXDONE_MASK|IRQ_LORA_RXTOUT_MASK,
+        [RXMODE_SCAN]   = IRQ_LORA_RXDONE_MASK,
+        [RXMODE_RSSI]   = 0x00,
 };
 
 // start LoRa receiver (time=LMIC.rxtime, timeout=LMIC.rxsyms, result=LMIC.frame[LMIC.dataLen])
@@ -750,13 +766,13 @@ u1_t radio_rssi () {
 }
 
 static CONST_TABLE(u2_t, LORA_RXDONE_FIXUP)[] = {
-    [FSK]  =     us2osticks(0), // (   0 ticks)
-    [SF7]  =     us2osticks(0), // (   0 ticks)
-    [SF8]  =  us2osticks(1648), // (  54 ticks)
-    [SF9]  =  us2osticks(3265), // ( 107 ticks)
-    [SF10] =  us2osticks(7049), // ( 231 ticks)
-    [SF11] = us2osticks(13641), // ( 447 ticks)
-    [SF12] = us2osticks(31189), // (1022 ticks)
+        [FSK]  =     us2osticks(0), // (   0 ticks)
+        [SF7]  =     us2osticks(0), // (   0 ticks)
+        [SF8]  =  us2osticks(1648), // (  54 ticks)
+        [SF9]  =  us2osticks(3265), // ( 107 ticks)
+        [SF10] =  us2osticks(7049), // ( 231 ticks)
+        [SF11] = us2osticks(13641), // ( 447 ticks)
+        [SF12] = us2osticks(31189), // (1022 ticks)
 };
 
 // called by hal ext IRQ handler
@@ -776,7 +792,7 @@ void radio_irq_handler (u1_t dio) {
             LMIC.rxtime = now;
             // read the PDU and inform the MAC that we received something
             LMIC.dataLen = (readReg(LORARegModemConfig1) & SX1272_MC1_IMPLICIT_HEADER_MODE_ON) ?
-                readReg(LORARegPayloadLength) : readReg(LORARegRxNbBytes);
+                           readReg(LORARegPayloadLength) : readReg(LORARegRxNbBytes);
             // set FIFO read address pointer
             writeReg(LORARegFifoAddrPtr, readReg(LORARegFifoRxCurrentAddr));
             // now read the FIFO
@@ -824,25 +840,25 @@ void radio_irq_handler (u1_t dio) {
 void os_radio (u1_t mode) {
     hal_disableIRQs();
     switch (mode) {
-      case RADIO_RST:
-        // put radio to sleep
-        opmode(OPMODE_SLEEP);
-        break;
+        case RADIO_RST:
+            // put radio to sleep
+            opmode(OPMODE_SLEEP);
+            break;
 
-      case RADIO_TX:
-        // transmit frame now
-        starttx(); // buf=LMIC.frame, len=LMIC.dataLen
-        break;
+        case RADIO_TX:
+            // transmit frame now
+            starttx(); // buf=LMIC.frame, len=LMIC.dataLen
+            break;
 
-      case RADIO_RX:
-        // receive frame now (exactly at rxtime)
-        startrx(RXMODE_SINGLE); // buf=LMIC.frame, time=LMIC.rxtime, timeout=LMIC.rxsyms
-        break;
+        case RADIO_RX:
+            // receive frame now (exactly at rxtime)
+            startrx(RXMODE_SINGLE); // buf=LMIC.frame, time=LMIC.rxtime, timeout=LMIC.rxsyms
+            break;
 
-      case RADIO_RXON:
-        // start scanning for beacon now
-        startrx(RXMODE_SCAN); // buf=LMIC.frame
-        break;
+        case RADIO_RXON:
+            // start scanning for beacon now
+            startrx(RXMODE_SCAN); // buf=LMIC.frame
+            break;
     }
     hal_enableIRQs();
 }

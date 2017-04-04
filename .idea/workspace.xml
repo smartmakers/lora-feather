@@ -21,7 +21,114 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec922180-b3d3-40f1-af0b-2568113a9075" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/doc/LMiC-Modem.docx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/doc/LMiC-Modem.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/doc/LMiC-v1.6.docx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/doc/LMiC-v1.6.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/doc/README.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/doc/release-notes.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/beacon/beacon.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/beacon/beacon.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/beacon/beacon.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/beacon/beacon.uvoptx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/beacon/beacon.uvprojx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/beacon/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/beacon/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/hello.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/hello.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/hello.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/hello.uvoptx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/hello.uvprojx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/interrupt.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/interrupt.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/interrupt.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/interrupt.uvoptx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/interrupt.uvprojx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/interrupt/sensor.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/join/join.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/join/join.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/join/join.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/join/join.uvoptx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/join/join.uvprojx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/join/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/join/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/buffer.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/frame.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/hex.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/modem.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/modem.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/modem.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/modem.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/modem.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/queue.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/modem/usart.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/periodic.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/periodic.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/periodic.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/periodic.uvoptx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/periodic.uvprojx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/periodic/sensor.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/ping/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/ping/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/ping/ping.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/ping/ping.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/ping/ping.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/ping/ping.uvoptx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/ping/ping.uvprojx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/projects.gmk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/transmit/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/transmit/makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/transmit/transmit.ewd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/transmit/transmit.ewp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/transmit/transmit.eww" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/transmit/transmit.uvoptx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/transmit/transmit.uvprojx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/aes.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/hal.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/lmic.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/lmic.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/lorabase.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/oslmic.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/oslmic.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/radio.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/adc.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/blipper.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/blipper.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/crc.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/debug.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/debug.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/eeprom.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/hal.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/hw.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/hw.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/i2c.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/leds.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/leds.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/spi.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/startup_stm32l1xx_md_gnu.s" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/startup_stm32l1xx_md_iar.s" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/startup_stm32l1xx_md_keil.s" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/stm32l1xx.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/system_stm32l1xx.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/stm32/system_stm32l1xx.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/serialmonitor_settings.xml" afterPath="$PROJECT_DIR$/.idea/serialmonitor_settings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/aes/lmic.c" afterPath="$PROJECT_DIR$/lib/lmic/src/aes/lmic.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/config.h" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/config.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/hal.h" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/hal.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/lorabase.h" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/lorabase.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.c" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.h" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lmic/src/lmic/radio.c" afterPath="$PROJECT_DIR$/lib/lmic/src/lmic/radio.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PeriodicConfirmed.cpp" afterPath="$PROJECT_DIR$/src/PeriodicConfirmed.cpp" />
     </list>
@@ -43,12 +150,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="platformio.ini" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/platformio.ini">
+      <file leaf-file-name="lorabase.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lorabase.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="586">
+              <caret line="406" column="22" selection-start-line="406" selection-start-column="22" selection-end-line="406" selection-end-column="22" />
+              <folding>
+                <element signature="e#5017#6541#0" expanded="true" />
+                <element signature="e#11845#12587#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,22 +166,19 @@
       <file leaf-file-name="PeriodicConfirmed.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/PeriodicConfirmed.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="91" column="24" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
+            <state relative-caret-position="2352">
+              <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="672">
-                <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-                <folding />
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="ttn-abp.ino" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/lmic/examples/ttn-abp/ttn-abp.ino">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="188" column="55" selection-start-line="188" selection-start-column="55" selection-end-line="197" selection-end-column="96" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -79,8 +186,8 @@
       <file leaf-file-name="config.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/config.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1953">
-              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+            <state relative-caret-position="646">
+              <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -89,28 +196,8 @@
       <file leaf-file-name="lmic.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="856">
-              <caret line="679" column="26" selection-start-line="679" selection-start-column="26" selection-end-line="679" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="radio.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/radio.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="785" column="85" selection-start-line="785" selection-start-column="64" selection-end-line="785" selection-end-column="85" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lmic.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="777">
-              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="204">
+              <caret line="724" column="32" selection-start-line="724" selection-start-column="32" selection-end-line="724" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -127,12 +214,14 @@
         <option value="$PROJECT_DIR$/src/PeriodicPing.cpp" />
         <option value="$PROJECT_DIR$/src/Periodic.cpp" />
         <option value="$PROJECT_DIR$/src/PeriodicUnconfirmed.cpp" />
-        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h" />
-        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.h" />
-        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c" />
-        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/config.h" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/lib/lmic/src/lmic/radio.c" />
+        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.h" />
+        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.c" />
+        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/lorabase.h" />
+        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h" />
+        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/config.h" />
+        <option value="$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c" />
         <option value="$PROJECT_DIR$/src/PeriodicConfirmed.cpp" />
       </list>
     </option>
@@ -173,7 +262,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
@@ -237,6 +326,146 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lora-feather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttn-abp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -245,17 +474,20 @@
     <property name="recentsLimit" value="5" />
     <property name="settings.editor.selected.configurable" value="CPPToolchains" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/platformio.ini" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/lmic.c" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/lmic/lmic.c" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/examples" />
       <recent name="$PROJECT_DIR$/lib/lmic/examples" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/lmic/doc" />
+      <recent name="$PROJECT_DIR$/lib/lmic" />
+      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunManager" selected="Application.PLATFORMIO_UPLOAD">
@@ -492,11 +724,12 @@
       <workItem from="1491217607411" duration="7500000" />
       <workItem from="1491228032872" duration="4501000" />
       <workItem from="1491305848764" duration="2443000" />
+      <workItem from="1491316425428" duration="15565000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19082000" />
+    <option name="totallyTimeSpent" value="34647000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -513,16 +746,16 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18668123" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951945" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30818966" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951945" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Serial Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29176202" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Serial Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.29094827" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="2592" y="54" width="608" height="970" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32837528" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275862" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2665904" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -571,6 +804,75 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/platformio.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PeriodicConfirmed.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="672">
+            <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1953">
+          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14259">
+          <caret line="679" column="26" selection-start-line="679" selection-start-column="26" selection-end-line="679" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/radio.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16485">
+          <caret line="785" column="85" selection-start-line="785" selection-start-column="64" selection-end-line="785" selection-end-column="85" />
+          <folding>
+            <element signature="e#9755#9804#0" expanded="false" />
+            <element signature="e#12479#12565#0" expanded="false" />
+            <element signature="e#14963#15937#0" expanded="false" />
+            <element signature="e#16604#16862#0" expanded="false" />
+            <element signature="e#19699#20099#0" expanded="false" />
+            <element signature="e#22669#23294#0" expanded="false" />
+            <element signature="e#25908#25945#0" expanded="false" />
+            <element signature="e#26315#26388#0" expanded="false" />
+            <element signature="e#26936#27703#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="777">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/platformio.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -714,30 +1016,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-445">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/config.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1953">
-          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -749,26 +1027,178 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c">
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/hal/hal.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="856">
-          <caret line="679" column="26" selection-start-line="679" selection-start-column="26" selection-end-line="679" selection-end-column="26" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/hal/hal.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4321">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="-2709">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/lmic-release-v1.6/doc/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/library.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/lmic-release-v1.6/lmic/lmic.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="245" column="31" selection-start-line="245" selection-start-column="16" selection-end-line="245" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/radio.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="785" column="85" selection-start-line="785" selection-start-column="64" selection-end-line="785" selection-end-column="85" />
+        <state relative-caret-position="124">
+          <caret line="841" column="19" selection-start-line="841" selection-start-column="19" selection-end-line="841" selection-end-column="19" />
+          <folding>
+            <element signature="e#9755#9804#0" expanded="false" />
+            <element signature="e#12479#12565#0" expanded="false" />
+            <element signature="e#14963#15937#0" expanded="false" />
+            <element signature="e#16604#16862#0" expanded="false" />
+            <element signature="e#19699#20099#0" expanded="false" />
+            <element signature="e#22669#23294#0" expanded="false" />
+            <element signature="e#25908#25945#0" expanded="false" />
+            <element signature="e#26315#26388#0" expanded="false" />
+            <element signature="e#26936#27703#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lorabase.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="406" column="22" selection-start-line="406" selection-start-column="22" selection-end-line="406" selection-end-column="22" />
+          <folding>
+            <element signature="e#5017#6541#0" expanded="true" />
+            <element signature="e#11845#12587#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/lmic-release-v1.6/lmic/lmic.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="1299" column="14" selection-start-line="1299" selection-start-column="12" selection-end-line="1299" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/hal.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1761">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/doc/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="38" column="9" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/oslmic.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="172" column="5" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/aes/lmic.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="385" column="6" selection-start-line="385" selection-start-column="6" selection-end-line="385" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/doc/lmic-release-v1.6/examples/hello/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1068">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/examples/ttn-abp/ttn-abp.ino">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="188" column="55" selection-start-line="188" selection-start-column="55" selection-end-line="197" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="285" column="6" selection-start-line="285" selection-start-column="6" selection-end-line="285" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lmic/src/lmic/lmic.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="724" column="32" selection-start-line="724" selection-start-column="32" selection-end-line="724" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PeriodicConfirmed.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="91" column="24" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
+        <state relative-caret-position="2352">
+          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding />
         </state>
       </provider>
