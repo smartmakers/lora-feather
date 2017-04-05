@@ -11,7 +11,7 @@
 /* LoRa Parameters */
 
 // DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t DEVEUI[8] PROGMEM = { 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // APPEUI: Application ID (LSBF)
 static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -170,7 +170,7 @@ void onEvent (ev_t ev) {
 }
 
 void setup() {
-    while (!Serial);
+//    while (!Serial);
 
     Serial.begin(9600);
     delay(100);
