@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(lora-feather)
+project(embedded)
 
 include(CMakeListsPrivate.txt)
 
