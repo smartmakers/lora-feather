@@ -1,20 +1,18 @@
 # LoRa Feather
 
-#### Using Platformio and CLion
-From the root directory, run:
- 
+## Usage with PlatformIO and CLion
+Initialize the PlatformIO project using the following command;
  ```
- $ platformio init --ide clion --board nanoatmega328
+platformio init --board feather32u4 --ide clion --project-option="lib_deps=git@gitlab.com:smartmakers/lmic-arduino.git"
  ```
- 
 Then open the directory as a standard CLion project.
 
-#### Edit the LoRaWan Parameters
+## Edit the LoRaWan Parameters
 
 Each device needs three parameters in order to be able to connect to the network. In order to better keep track of each device, it is recommended to write down those parameters on a label placed on the device itself.
 
 
-The **application identifier** (AppEUI) identifies a group of devices which have the same purpose. In our case all the devices installed into the transformer stations belongs to the same application, and should then have the same APPEUI.
+The **application identifier** (AppEUI) identifies a group of devices which have the same purpose. Typically, this parameter can not be changed for of-the-shelf LoRaWan devices, and it is typically unique to the manufacturer, or to a specific device model.
 ``` 
 // APPEUI: Application ID (LSBF)
 static const u1_t APPEUI[8] PROGMEM = { 0x45, 0x18, 0x00, 0xd0, 0x7e, 0xd5, 0xb3, 0x70 };
