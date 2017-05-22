@@ -53,40 +53,92 @@ uint8_t led_short_blink(uint32_t t) {
     return wave_pwm( t, 2000, 50 );
 }
 
+// uses only 3 bits
+static const uint8_t protocolVersion = 0x01;
+
+// uses only 5 bits
+static const uint8_t emptyMsg = 0x00;
+static const uint8_t zerosMsg = 0x01;
+static const uint8_t helloMsg = 0x02;
+static const uint8_t batteryAndRSSIMsg = 0x03;
+static const uint8_t int32Msg = 0x04;
+static const uint8_t float64Msg = 0x05;
+
 static uint8_t hello[] = "hello";
-static uint8_t data[2];
+static uint8_t headerOnly[1];
+// using 1st byte for protocol version and msg type
+static uint8_t payload[10];
+
+static const int32_t int32Val = 123456;
+static const double float64Val = 123456.123456;
+
 static osjob_t job_transmit;
 static uint8_t job_counter = 0;
 
-void sendBatteryAndRSSI()
-{
-    // Save battery level.
-    // To decode on the server side:
-    // Voltage = Value * (2^3) * 3.3 / 1024;
-    data[0] = (uint8_t)(analogRead(PIN_BATTERY) >> 2);
-
-    // Save last RSSI
-    // Actual RSSI: (Value - 64)
-    // radio.c (l.786), RFM95 (5.5.5, p82)
-    data[1] = (uint8_t)(LMIC.rssi);
-
-    // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, data, sizeof(data), 1);
+uint8_t makeHeader(uint8_t protocolVersion, uint8_t msgType)  {
+    return protocolVersion << 5 | msgType;
 }
 
-void sendHello()
+void sendEmptyMsg()
 {
+    headerOnly[0] = makeHeader(protocolVersion, emptyMsg);
     // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, hello, sizeof(hello), 1);
+    LMIC_setTxData2(1, headerOnly, sizeof(headerOnly), 1);
 }
 
 void sendZeros()
 {
-    data[0] = (uint8_t)(0);
-    data[1] = (uint8_t)(0);
+    payload[0] = makeHeader(protocolVersion, zerosMsg);
+    payload[1] = (uint8_t)(0);
+    payload[2] = (uint8_t)(0);
 
     // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, data, sizeof(data), 1);
+    LMIC_setTxData2(1, payload, 3, 1);
+}
+
+void sendHello()
+{
+    payload[0] = makeHeader(protocolVersion, helloMsg);
+    memcpy(payload + 1, hello, sizeof(hello));
+    // Transmit encoded data (confirmed).
+    LMIC_setTxData2(1, payload, sizeof(hello) + 1, 1);
+}
+
+void sendBatteryAndRSSI()
+{
+    payload[0] = makeHeader(protocolVersion, batteryAndRSSIMsg);
+    // Save battery level.
+    // To decode on the server side:
+    // Voltage = Value * (2^3) * 3.3 / 1024;
+    payload[1] = (uint8_t)(analogRead(PIN_BATTERY) >> 2);
+
+    // Save last RSSI
+    // Actual RSSI: (Value - 64)
+    // radio.c (l.786), RFM95 (5.5.5, p82)
+    payload[2] = (uint8_t)(LMIC.rssi);
+
+    // Transmit encoded data (confirmed).
+    LMIC_setTxData2(1, payload, 3, 1);
+}
+
+void sendInt32()
+{
+    payload[0] = makeHeader(protocolVersion, int32Msg);
+    // Copy data to send.
+    memcpy(payload + 1, (uint8_t*)&int32Val, sizeof(int32Val));
+
+    // Transmit encoded data (confirmed).
+    LMIC_setTxData2(1, payload, sizeof(int32Val) + 1, 1);
+}
+
+void sendFloat64()
+{
+    payload[0] = makeHeader(protocolVersion, float64Msg);
+    // Copy data to send.
+    memcpy(payload + 1, (uint8_t*)&float64Val, sizeof(float64Val));
+
+    // Transmit encoded data (confirmed).
+    LMIC_setTxData2(1, payload, sizeof(float64Val) + 1, 1);
 }
 
 void jobTransmitCallback(osjob_t* j)
@@ -99,14 +151,23 @@ void jobTransmitCallback(osjob_t* j)
         Serial.println(F(": TXDATA"));
 
         switch (job_counter) {
-            case 0:
-                sendBatteryAndRSSI();
+            case emptyMsg:
+                sendEmptyMsg();
                 break;
-            case 1:
+            case zerosMsg:
+                sendZeros();
+                break;
+            case helloMsg:
                 sendHello();
                 break;
-            case 2:
-                sendZeros();
+            case batteryAndRSSIMsg:
+                sendBatteryAndRSSI();
+                break;
+            case int32Msg:
+                sendInt32();
+                break;
+            case float64Msg:
+                sendFloat64();
                 break;
             default:
                 job_counter = 0;
