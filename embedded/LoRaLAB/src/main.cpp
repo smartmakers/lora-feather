@@ -11,13 +11,13 @@
 /* LoRa Parameters */
 
 // DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t DEVEUI[8] PROGMEM = { 0x01, 0x03, 0xB7, 0x44, 0x24, 0x59, 0x34, 0x12 };
 
 // APPEUI: Application ID (LSBF)
-static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00 };
 
 // APPKEY: Device-specific AES key.
-static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
+static const u1_t APPKEY[16] PROGMEM = { 0x69, 0xAF, 0x25, 0x08, 0x5A, 0x4B, 0xDF, 0xC1, 0x3E, 0x65, 0xFA, 0x27, 0xDD, 0xA0, 0x3B, 0x9A };
 
 /* End of Parameters */
 
@@ -203,20 +203,6 @@ void onEvent (ev_t ev) {
 
             // Once connected blink make short blinks.
             wave_generator_apply(gen, led_short_blink);
-
-            // Set lowest data rate by default.
-            LMIC_setDrTxpow(DR_SF12, 14);
-
-            // Disable link check validation.
-            LMIC_setLinkCheckMode(0);
-
-            // Manually setup additional channels.
-            LMIC_setupChannel(3, 867100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
-            LMIC_setupChannel(4, 867300000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
-            LMIC_setupChannel(5, 867500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
-            LMIC_setupChannel(6, 867700000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
-            LMIC_setupChannel(7, 867900000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
-            LMIC_setupChannel(8, 868800000, DR_RANGE_MAP(DR_FSK,  DR_FSK),  BAND_MILLI);      // g2-band
 
             // Schedule first transmission.
             os_setCallback( &job_transmit, &jobTransmitCallback );
