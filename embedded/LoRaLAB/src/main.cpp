@@ -6,18 +6,18 @@
 /* Behavior Parameters */
 
 // Period between two data transmissions (seconds) if there is no change in the inputs.
-#define TRANSMIT_PERIOD 5
+#define TRANSMIT_PERIOD 30
 
 /* LoRa Parameters */
 
 // DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { 0x01, 0x03, 0xB7, 0x44, 0x24, 0x59, 0x34, 0x12 };
+static const u1_t DEVEUI[8] PROGMEM = { 0x01, 0x02, 0x60, 0x44, 0x24, 0x59, 0x34, 0x12 };
 
 // APPEUI: Application ID (LSBF)
-static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00 };
+static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00 };
 
 // APPKEY: Device-specific AES key.
-static const u1_t APPKEY[16] PROGMEM = { 0x69, 0xAF, 0x25, 0x08, 0x5A, 0x4B, 0xDF, 0xC1, 0x3E, 0x65, 0xFA, 0x27, 0xDD, 0xA0, 0x3B, 0x9A };
+static const u1_t APPKEY[16] PROGMEM = { 0xEB, 0x9D, 0xAB, 0x9F, 0x11, 0x08, 0x28, 0xC3, 0x35, 0xC1, 0xDA, 0x28, 0xDD, 0xFD, 0x4C, 0x56 };
 
 /* End of Parameters */
 
@@ -141,6 +141,18 @@ void sendFloat64()
     LMIC_setTxData2(1, payload, sizeof(float64Val) + 1, 1);
 }
 
+void reset()
+{
+  // Reset the MAC state.
+  LMIC_reset();
+
+  // Set clock error because of inaccurate clock.
+  LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
+
+  // Disable ADR (mobile).
+  LMIC_setAdrMode(1);
+}
+
 void jobTransmitCallback(osjob_t* j)
 {
     if (LMIC.opmode & OP_TXRXPEND) {
@@ -172,8 +184,7 @@ void jobTransmitCallback(osjob_t* j)
             default:
                 job_counter = 0;
 
-                // Reset the MAC state.
-                LMIC_reset();
+                reset();
 
                 // Start join (OTAA).
                 LMIC_startJoining();
@@ -273,12 +284,8 @@ void setup() {
 
     // LMIC init
     os_init();
-    // Reset the MAC state.
-    LMIC_reset();
-    // Set clock error because of inaccurate clock.
-    LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
-    // Disable ADR (mobile).
-    LMIC_setAdrMode(0);
+
+    reset();
 
     // Start join (OTAA).
     LMIC_startJoining();
