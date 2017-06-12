@@ -1,23 +1,24 @@
+#include <Arduino.h>
 #include <wave.h>
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
 
+/* LoRa Parameters */
+// #include "../../DeviceIdentifiers/de.h"
+
+// DEVEUI: Unique device ID (LSBF)
+static const u1_t DEVEUI[8] PROGMEM = { 0x88, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+// APPEUI: Application ID (LSBF)
+static const u1_t APPEUI[8] PROGMEM = { 0x88, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+// APPKEY: Device-specific AES key.
+static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 /* Behavior Parameters */
 
 // Period between two data transmissions (seconds) if there is no change in the inputs.
 #define TRANSMIT_PERIOD 30
-
-/* LoRa Parameters */
-
-// DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { 0x01, 0x02, 0x60, 0x44, 0x24, 0x59, 0x34, 0x12 };
-
-// APPEUI: Application ID (LSBF)
-static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00 };
-
-// APPKEY: Device-specific AES key.
-static const u1_t APPKEY[16] PROGMEM = { 0xEB, 0x9D, 0xAB, 0x9F, 0x11, 0x08, 0x28, 0xC3, 0x35, 0xC1, 0xDA, 0x28, 0xDD, 0xFD, 0x4C, 0x56 };
 
 /* End of Parameters */
 
@@ -25,19 +26,15 @@ void os_getArtEui(u1_t *buf) { memcpy_P(buf, APPEUI, 8); }
 void os_getDevEui(u1_t *buf) { memcpy_P(buf, DEVEUI, 8); }
 void os_getDevKey(u1_t *buf) { memcpy_P(buf, APPKEY, 16); }
 
-// Pin mapping (nss and dio0/1 required)
 const lmic_pinmap lmic_pins = {
         .nss = 8,
         .rxtx = LMIC_UNUSED_PIN,
-        .rst = 11,
-        .dio = {7, 5, LMIC_UNUSED_PIN},
+        .rst = PIN_RADIO_RST,
+        .dio = {PIN_RADIO_DIO0, 5, LMIC_UNUSED_PIN},
 };
 
 // Status led pin.
 #define LED_STATUS 13
-
-// Battery voltage pin.
-#define PIN_BATTERY A9
 
 static wave_generator_t* gen;
 
