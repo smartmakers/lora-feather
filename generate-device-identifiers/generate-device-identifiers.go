@@ -112,7 +112,7 @@ func generateHeader(headerTmpl *template.Template, device []string) {
 
 	deveui := bytesToHexSlice(device[1], true)
 	appeui := bytesToHexSlice(device[2], true)
-	appkey := bytesToHexSlice(device[3], true)
+	appkey := bytesToHexSlice(device[3], false)
 
 	data := struct {
 		DEVEUI []string
