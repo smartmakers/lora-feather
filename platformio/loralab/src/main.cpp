@@ -5,7 +5,7 @@
 #include <SPI.h>
 
 /* LoRa Parameters */
-#include "../../device-identifiers/play01.h"
+#include "../../device-identifiers/play05.h"
 
 /* Behavior Parameters */
 
@@ -178,6 +178,8 @@ void jobTransmitCallback(osjob_t* j)
 
                 // Start join (OTAA).
                 LMIC_startJoining();
+#else
+                Serial.println("Skipping joining for abp devices");
 #endif
                 return;
         }
@@ -282,7 +284,17 @@ void setup() {
     // Start join (OTAA).
     LMIC_startJoining();
 #elif defined ABP
-    LMIC_setSession(01, DEVADDR, (xref2u1_t)NWKSKEY, (xref2u1_t)APPSKEY);
+    // set the session and immediately start sendoing stuff
+#ifdef PROGMEM
+    uint8_t appskey[sizeof(APPSKEY)];
+    uint8_t nwkskey[sizeof(NWKSKEY)];
+    memcpy_P(appskey, APPSKEY, sizeof(APPSKEY));
+    memcpy_P(nwkskey, NWKSKEY, sizeof(NWKSKEY));
+    LMIC_setSession (0x1, DEVADDR, nwkskey, appskey);
+#else
+    LMIC_setSession(0x1, DEVADDR, NWKSKEY, APPSKEY);
+#endif
+    os_setCallback( &job_transmit, &jobTransmitCallback );
 #else
 #error "Need OTAA or ABP set (or simply include the device's header file)"
 #endif
