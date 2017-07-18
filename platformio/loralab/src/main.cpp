@@ -5,16 +5,8 @@
 #include <SPI.h>
 
 /* LoRa Parameters */
-// #include "../../DeviceIdentifiers/de.h"
+#include "../../device-identifiers/play01.h"
 
-// DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { 0x88, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
-// APPEUI: Application ID (LSBF)
-static const u1_t APPEUI[8] PROGMEM = { 0x88, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
-// APPKEY: Device-specific AES key.
-static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 /* Behavior Parameters */
 
 // Period between two data transmissions (seconds) if there is no change in the inputs.
@@ -181,10 +173,12 @@ void jobTransmitCallback(osjob_t* j)
             default:
                 job_counter = 0;
 
+#ifdef OTAA
                 reset();
 
                 // Start join (OTAA).
                 LMIC_startJoining();
+#endif
                 return;
         }
         job_counter += 1;
@@ -284,8 +278,14 @@ void setup() {
 
     reset();
 
+#ifdef OTAA
     // Start join (OTAA).
     LMIC_startJoining();
+#elif defined ABP
+    LMIC_setSession(01, DEVADDR, (xref2u1_t)NWKSKEY, (xref2u1_t)APPSKEY);
+#else
+#error "Need OTAA or ABP set (or simply include the device's header file)"
+#endif
 }
 
 void loop() {
