@@ -3,32 +3,47 @@ package main
 import (
 	"encoding/csv"
 	"flag"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
-
-	"fmt"
 	"log"
 	"strings"
 	"text/template"
+	"strconv"
+
+	"github.com/pkg/errors"
 )
 
 const hppSkeleton = `#include <lmic.h>
 #include <hal/hal.h>
 
+// OTAA/ABP: defines activation method for the device
+#define {{.Mode}}
+
 // DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { {{join .DEVEUI}} };
+static const u1_t DEVEUI[8] PROGMEM = { {{join .DevEUI}} };
 
 // APPEUI: Application ID (LSBF)
-static const u1_t APPEUI[8] PROGMEM = { {{join .APPEUI}} };
+static const u1_t APPEUI[8] PROGMEM = { {{join .AppEUI}} };
 
 // APPKEY: Device-specific AES key.
-static const u1_t APPKEY[16] PROGMEM = { {{join .APPKEY}} };
+static const u1_t APPKEY[16] PROGMEM = { {{join .AppKey}} };
+
+// DEVADDR: Unique device ID
+static const u4_t DEVADDR = {{.DevAddr}};
+
+// NWKSKEY: network specific session key
+static const u1_t NWKSKEY[16] PROGMEM = { {{join .NwkSKey}} };
+
+// APPSKEY: Application specific session key
+static const u1_t APPSKEY[16] PROGMEM = { {{join .AppSKey}} };
 `
 
 var (
-	devicesPath string
-	outDir      string
+	otaaDevicesPath string
+	abpDevicesPath  string
+	outDir          string
 )
 
 func main() {
@@ -36,11 +51,18 @@ func main() {
 
 	os.Mkdir(outDir, 0666)
 
-	devices := readCsv(devicesPath)
 	headerTmpl := createHeaderTemplate()
 
-	for _, device := range devices {
-		generateHeader(headerTmpl, device)
+	otaaDevices := readCsv(otaaDevicesPath)
+	for _, device := range otaaDevices {
+		err := generateHeader(headerTmpl, device, otaa)
+		check(err)
+	}
+
+	abpDevices := readCsv(abpDevicesPath)
+	for _, device := range abpDevices {
+		err := generateHeader(headerTmpl, device, abp)
+		check(err)
 	}
 
 	log.Println("done!")
@@ -50,8 +72,10 @@ func parseFlags() {
 	wd, err := os.Getwd()
 	check(err)
 
-	flag.StringVar(&devicesPath, "devices", filepath.Join(wd, "devices.csv"), "file with Device configurations")
-	flag.StringVar(&outDir, "out", filepath.Join(wd, "embedded", "DeviceIdentifiers"), "output directory for generated header files")
+	basedir := filepath.Join(wd, "..", "sm-lora-core", "tools", "init-env", "environments")
+	flag.StringVar(&otaaDevicesPath, "otaa-devices", filepath.Join(basedir, "otaa-devices.csv"), "file with OTAA device configurations")
+	flag.StringVar(&abpDevicesPath, "abp-devices", filepath.Join(basedir, "abp-devices.csv"), "file with ABP device configurations")
+	flag.StringVar(&outDir, "out", filepath.Join(wd, "platformio", "device-identifiers"), "output directory for generated header files")
 
 	flag.Parse()
 }
@@ -101,31 +125,57 @@ func createHeaderTemplate() *template.Template {
 	return tmpl
 }
 
-func generateHeader(headerTmpl *template.Template, device []string) {
-	filename := device[0] + ".h"
+type activationType int;
+const (
+	otaa activationType = iota
+	abp
+)
+func generateHeader(headerTmpl *template.Template, line []string, actType activationType) error {
+	filename := line[0] + ".h"
 
 	f, err := os.OpenFile(filepath.Join(outDir, filename), os.O_WRONLY|os.O_CREATE, 0666)
-	check(err)
+	if err != nil {
+		return errors.Wrap(err, "cannot open output file")
+	}
+
 	defer f.Close()
 
 	log.Printf("processing \"%s\"", filename)
 
-	deveui := bytesToHexSlice(device[1], true)
-	appeui := bytesToHexSlice(device[2], true)
-	appkey := bytesToHexSlice(device[3], false)
-
 	data := struct {
-		DEVEUI []string
-		APPEUI []string
-		APPKEY []string
-	}{
-		DEVEUI: deveui,
-		APPEUI: appeui,
-		APPKEY: appkey,
+		Mode    string
+		DevEUI  []string
+		AppEUI  []string
+		AppKey  []string
+		DevAddr int64
+		NwkSKey []string
+		AppSKey []string
+	}{}
+
+	if actType == otaa {
+		data.Mode = "OTAA"
+		data.DevEUI = bytesToHexSlice(line[1], true)
+		data.AppEUI = bytesToHexSlice(line[2], true)
+		data.AppKey = bytesToHexSlice(line[3], false)
+		data.DevAddr = 0
+		data.NwkSKey = allZeroHexSlice(16)
+		data.AppSKey = allZeroHexSlice(16)
+	} else {
+		devAddr, err := strconv.ParseInt(line[1], 10, 32)
+		if err != nil {
+			return errors.Wrap(err, "cannot parse dev addr")
+		}
+
+		data.Mode = "ABP"
+		data.DevEUI = allZeroHexSlice(8)
+		data.AppEUI = allZeroHexSlice(8)
+		data.AppKey = allZeroHexSlice(16)
+		data.DevAddr = devAddr
+		data.NwkSKey = bytesToHexSlice(line[2], false)
+		data.AppSKey = bytesToHexSlice(line[3], false)
 	}
 
-	err = headerTmpl.Execute(f, data)
-	check(err)
+	return errors.Wrap(headerTmpl.Execute(f, data), "cannot instantiate header file template")
 }
 
 // converts HEX bytes string representation to slice
@@ -145,6 +195,11 @@ func bytesToHexSlice(bytes string, invert bool) []string {
 	}
 
 	return res
+}
+
+func allZeroHexSlice(numBytes int) []string {
+	str := strings.Repeat("00", numBytes)
+	return bytesToHexSlice(str, false)
 }
 
 func check(err error) {
