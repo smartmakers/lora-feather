@@ -31,7 +31,7 @@ static const u1_t APPEUI[8] PROGMEM = { {{join .AppEUI}} };
 static const u1_t APPKEY[16] PROGMEM = { {{join .AppKey}} };
 
 // DEVADDR: Unique device ID
-static const u4_t DEVADDR = {{.DevAddr}};
+static const u4_t DEVADDR = 0x{{.DevAddr}};
 
 // NWKSKEY: network specific session key
 static const u1_t NWKSKEY[16] PROGMEM = { {{join .NwkSKey}} };
