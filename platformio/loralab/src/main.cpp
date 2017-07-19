@@ -142,6 +142,28 @@ void reset()
   LMIC_setAdrMode(1);
 }
 
+void printDownlinkData() {
+    Serial.print(os_getTime());
+    Serial.print(": on port ");
+    Serial.print(LMIC.frame[LMIC.dataBeg-1]);
+    Serial.print(" received ");
+    if (LMIC.dataLen != 0) {
+        Serial.print("0x");
+        for (int idx = LMIC.dataBeg; idx != LMIC.dataBeg + LMIC.dataLen; ++idx) {
+            u1_t ch = LMIC.frame[idx];
+            if (ch < 10) {
+                Serial.print("0");
+                Serial.print(ch, HEX);
+            } else {
+                Serial.print(ch, HEX);
+            }
+        }
+    }  else {
+        Serial.print("nothing");
+    }
+    Serial.println();
+}
+
 void jobTransmitCallback(osjob_t* j)
 {
     if (LMIC.opmode & OP_TXRXPEND) {
@@ -244,6 +266,8 @@ void onEvent (ev_t ev) {
                 // Slow blinking while disconnected.
                 wave_generator_apply(gen, led_slow_blink);
             }
+
+            printDownlinkData();
 
             // Schedule next transmission.
             os_setTimedCallback( &job_transmit, os_getTime() + sec2osticks(TRANSMIT_PERIOD), &jobTransmitCallback );
