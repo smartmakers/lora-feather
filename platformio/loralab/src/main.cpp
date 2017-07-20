@@ -5,7 +5,7 @@
 #include <SPI.h>
 
 /* LoRa Parameters */
-#include "../../device-identifiers/play05.h"
+#include "../../device-identifiers/qa05.h"
 
 /* Behavior Parameters */
 
@@ -202,6 +202,7 @@ void jobTransmitCallback(osjob_t* j)
                 LMIC_startJoining();
 #else
                 Serial.println("Skipping joining for abp devices");
+                os_setCallback( &job_transmit, &jobTransmitCallback );
 #endif
                 return;
         }
@@ -308,7 +309,7 @@ void setup() {
     // Start join (OTAA).
     LMIC_startJoining();
 #elif defined ABP
-    // set the session and immediately start sendoing stuff
+    // set the session and immediately start sending stuff
 #ifdef PROGMEM
     uint8_t appskey[sizeof(APPSKEY)];
     uint8_t nwkskey[sizeof(NWKSKEY)];
