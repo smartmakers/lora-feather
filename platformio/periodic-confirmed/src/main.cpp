@@ -3,21 +3,24 @@
 #include <hal/hal.h>
 #include <SPI.h>
 
+/* LoRa Parameters */
+
+// DEVEUI: Unique device ID (LSBF)
+static const u1_t DEVEUI[8] PROGMEM = { 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+// APPEUI: Application ID (LSBF)
+static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+// APPKEY: Device-specific AES key.
+static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
+
 /* Behavior Parameters */
 
 // Minimum period between two data transmissions (seconds).
 #define TRANSMIT_PERIOD 5
 
-/* LoRa Parameters */
-
-// DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { 0x88, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
-// APPEUI: Application ID (LSBF)
-static const u1_t APPEUI[8] PROGMEM = { 0x88, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
-// APPKEY: Device-specific AES key.
-static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
+// Number of failed transmissions before resetting.
+#define FAILED_TRANSMISSIONS_BEFORE_RESET 5
 
 /* End of Parameters */
 
@@ -53,8 +56,27 @@ uint8_t led_short_blink(uint32_t t) {
     return wave_pwm( t, 2000, 50 );
 }
 
+static uint8_t failed;
 static uint8_t data[2];
 static osjob_t job_transmit;
+
+void reset()
+{
+    Serial.print(os_getTime());
+    Serial.print(": ");
+    Serial.println("RESET");
+
+    // Reset failed transmissions.
+    failed = 0;
+    // Reset the MAC state.
+    LMIC_reset();
+    // Set clock error because of inaccurate clock.
+    LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
+    // Disable ADR (mobile).
+    LMIC_setAdrMode(0);
+    // Start join (OTAA).
+    LMIC_startJoining();
+}
 
 void jobTransmitCallback(osjob_t* j)
 {
@@ -106,7 +128,7 @@ void onEvent (ev_t ev) {
             // Disable link check validation.
             LMIC_setLinkCheckMode(0);
 
-            // Manually setup additional channels.
+            // Manually setup additional channels (this is a hack, this should be done on the join accept).
             LMIC_setupChannel(3, 867100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(4, 867300000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(5, 867500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
@@ -144,23 +166,30 @@ void onEvent (ev_t ev) {
 
                 // While connected, short blink.
                 wave_generator_apply(gen, led_short_blink);
+
+                // Reset failed counter.
+                failed = 0;
+
             } else {
                 Serial.println(F("no ack"));
 
                 // Slow blinking while disconnected.
                 wave_generator_apply(gen, led_slow_blink);
+
+                // Increment failed counter.
+                failed++;
+
+                if (failed >= FAILED_TRANSMISSIONS_BEFORE_RESET) {
+                    // Reset if failed too many times.
+                    reset();
+
+                    break;
+                }
             }
 
             // Schedule next transmission.
             os_setTimedCallback( &job_transmit, os_getTime() + sec2osticks(TRANSMIT_PERIOD), &jobTransmitCallback );
 
-            break;
-
-        case EV_JOIN_FAILED:
-            Serial.println(F("EV_JOIN_FAILED"));
-
-            // Try joining again.
-            LMIC_startJoining();
             break;
 
         default:
@@ -170,7 +199,7 @@ void onEvent (ev_t ev) {
 }
 
 void setup() {
-//    while (!Serial);
+ // while (!Serial);
 
     Serial.begin(9600);
     delay(100);
@@ -181,17 +210,8 @@ void setup() {
     // Setup led wave generator.
     gen = wave_new_generator( millis );
 
-    // LMIC init
     os_init();
-    // Reset the MAC state.
-    LMIC_reset();
-    // Set clock error because of inaccurate clock.
-    LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
-    // Disable ADR (mobile).
-    LMIC_setAdrMode(0);
-
-    // Start join (OTAA).
-    LMIC_startJoining();
+    reset();
 }
 
 void loop() {
