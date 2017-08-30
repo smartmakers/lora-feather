@@ -6,7 +6,7 @@
 /* LoRa Parameters */
 
 // DEVEUI: Unique device ID (LSBF)
-static const u1_t DEVEUI[8] PROGMEM = { 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t DEVEUI[8] PROGMEM = { 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // APPEUI: Application ID (LSBF)
 static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -168,7 +168,7 @@ void onEvent (ev_t ev) {
                 wave_generator_apply(gen, led_short_blink);
 
                 // Reset failed counter.
-                failed = 0;
+                // failed = 0;
 
             } else {
                 Serial.println(F("no ack"));
@@ -177,11 +177,11 @@ void onEvent (ev_t ev) {
                 wave_generator_apply(gen, led_slow_blink);
 
                 // Increment failed counter.
-                failed++;
+                // failed++;
 
                 if (failed >= FAILED_TRANSMISSIONS_BEFORE_RESET) {
                     // Reset if failed too many times.
-                    reset();
+                    // reset();
 
                     break;
                 }
