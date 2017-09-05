@@ -7,28 +7,181 @@ import (
 	"log"
 	"time"
 
-	"gitlab.com/smartmakers/adeunis/database"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+
+	"encoding/json"
+
+	"gitlab.com/smartmakers/sm-lora-core/domain"
+	"gitlab.com/smartmakers/sm-lora-core/domain/types"
 )
 
 const (
 	DEFAULT_DB_DIALECT = "postgres"
-	DEFAULT_DB_DSN     = "host=production.smartmakers.de user=loraserver dbname=loraserver sslmode=disable password=dbpassword"
+	DEFAULT_DB_DSN     = "host=prod.smartmakers.de user=sm_lora_core dbname=sm_lora_core password=sm-lora-core-pass"
 )
 
 var (
 	withoutHeader bool
-	dateString    string
+	sinceString   string
+	untilString   string
 	dbDialect     string
 	dbDSN         string
-	appEUI        string
+	dbTable       string
 )
 
+const InputTimeLayout = "2006/01/02 15:04:05"
+
 func init() {
+	now := time.Now()
+	since := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+	until := since.Add(24 * time.Hour)
+
 	flag.BoolVar(&withoutHeader, "without-header", false, "Do not write the CSV header")
-	flag.StringVar(&dateString, "date", time.Now().Format("02/01/2006"), "Date to import the data from")
+	flag.StringVar(&sinceString, "since", since.Format(InputTimeLayout), "Since when to import the data")
+	flag.StringVar(&untilString, "until", until.Format(InputTimeLayout), "Until when to import the data")
 	flag.StringVar(&dbDialect, "dialect", DEFAULT_DB_DIALECT, "Database dialect")
 	flag.StringVar(&dbDSN, "dsn", DEFAULT_DB_DSN, "Database DSN")
-	flag.StringVar(&appEUI, "appeui", "0000000000000001", "AppEUI of Feather devices")
+	flag.StringVar(&dbTable, "table", "db_integration__feather_coverage_testers", "Database table name")
+}
+
+func main() {
+	flag.Parse()
+
+	// Parse since/until time.
+	since, err := time.Parse(InputTimeLayout, sinceString)
+	if err != nil {
+		log.Fatal(err)
+	}
+	until, err := time.Parse(InputTimeLayout, untilString)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Open database.
+	db, err := gorm.Open(dbDialect, dbDSN)
+	if err != nil {
+		log.Fatal("Failed to connect to the database: %s", err)
+	}
+
+	db = db. // Period filter
+			Where("reception_time >= ?", since.UTC().Format("%2006-01-02%")).
+			Where("reception_time <= ?", until.UTC().Format("%2006-01-02%"))
+
+	// Fetch entries from database.
+	var uplinks []*uplinkEntry
+	if err = db.Find(&uplinks).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	if !withoutHeader {
+
+		// Write csv headers to output.
+		fmt.Println("" +
+			"uplink_id," +
+			"uplink_frequency," +
+			"uplink_modulation," +
+			"uplink_data_rate," +
+			"uplink_coding_rate" +
+			"reception_unix," +
+			"reception_date," +
+			"reception_time," +
+			"reception_rssi," +
+			"reception_snr," +
+			"reception_gateway_eui," +
+			"device_id," +
+			"device_name," +
+			"device_group_id," +
+			"device_group_name," +
+			"device_otaa_app_eui," +
+			"device_otaa_dev_eui," +
+			"device_session_id," +
+			"device_session_f_cnt_up," +
+			"device_session_f_cnt_down,")
+	}
+
+	for _, uplink := range uplinks {
+
+		// Unmarhsal json of receptions.
+		var rxs []*domain.ReceptionInformation
+		if err = json.Unmarshal([]byte(uplink.ReceptionsJSON), &rxs); err != nil {
+			log.Fatal(err)
+		}
+
+		for _, rx := range rxs {
+
+			// Print row to output.
+			fmt.Printf("%d,%d,%s,%s,%s,%d,%s,%s,%d,%.2f,%s,%d,%s,%d,%s,%s,%s,%d,%d,%d\n",
+				uplink.ID,
+				uplink.Frequency,
+				uplink.Modulation,
+				uplink.DataRate,
+				uplink.CodingRate,
+				rx.Time.UnixNano(),
+				rx.Time.Format("2006/01/02"),
+				rx.Time.Format("15:04:05.000"),
+				rx.RSSI,
+				*rx.SNR,
+				rx.GatewayEUI,
+				uplink.DeviceID,
+				uplink.DeviceName,
+				uplink.DeviceGroupID,
+				uplink.DeviceGroupName,
+				uplink.DeviceOTAAAppEUI,
+				uplink.DeviceOTAADevEUI,
+				uplink.DeviceSessionID,
+				uplink.DeviceSessionFrameCountUp,
+				uplink.DeviceSessionFrameCountDown,
+			)
+		}
+	}
+}
+
+// uplink entry in the DB (DTO).
+type uplinkEntry struct {
+	ID int
+
+	// Device info
+	DeviceID   int
+	DeviceName string
+
+	// Group info
+	DeviceGroupID   int
+	DeviceGroupName string
+
+	// OTAA Parameters
+	DeviceOTAADevEUI types.EUI64 `gorm:"column:device_otaa_dev_eui;type:varchar(16)"`
+	DeviceOTAAAppEUI types.EUI64 `gorm:"column:device_otaa_app_eui;type:varchar(16)"`
+
+	// Session info.
+	DeviceSessionID             int
+	DeviceSessionDevAddr        types.DevAddr `gorm:"type:varchar(8)"` // ABP activation
+	DeviceSessionFrameCountUp   int
+	DeviceSessionFrameCountDown int
+
+	// Gateway info.
+	GatewayID   int
+	GatewayEUI  types.EUI64 `gorm:"column:gateway_eui;type:varchar(16)"`
+	GatewayName string
+
+	Port          int // FPort
+	Confirmed     bool
+	PayloadRaw    string `gorm:"size:1024"` // FRMPayload
+	PayloadFields string `gorm:"size:1024"` // Decoded Payload
+
+	// Receptions.
+	ReceptionsCount int
+	ReceptionsJSON  string `gorm:"column:receptions_json"`
+
+	// Radio parameters.
+	Frequency  int
+	Modulation string
+	DataRate   string
+	CodingRate string
+}
+
+func (row *uplinkEntry) TableName() string {
+	return dbTable
 }
 
 // Application payload.
@@ -54,46 +207,4 @@ func (payload *Payload) UnmarshalBinary(data []byte) error {
 	payload.RSSI = int(int8(data[1]) - 64) // LMIC radio.c (l.786), RFM95 (5.5.5, p82)
 
 	return nil
-}
-
-func main() {
-	flag.Parse()
-
-	// Parse data day.
-	date, err := time.Parse("02/01/2006", dateString)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Fetch messages from database.
-	rows, err := database.Import(dbDialect, dbDSN, []string{appEUI}, nil, date)
-	if err != nil {
-		log.Fatal("Error fetching from database: ", err)
-	}
-
-	if !withoutHeader {
-
-		// Write csv headers to output.
-		fmt.Println("Time, GatewayEUI, AppEUI, DevEUI, UplinkRSSI, DownlinkRSSI, BatteryVoltage")
-	}
-
-	for _, row := range rows {
-
-		// Unmarhsal adeunis binary payload.
-		var decoded Payload
-		err := decoded.UnmarshalBinary(row.Data)
-		if err != nil {
-			log.Fatal("Error decoding adeunis payload: ", err)
-		}
-
-		// Print row to output.
-		fmt.Printf("%s,%s,%s,%s,%d,%d,%f\n",
-			row.Time,
-			row.GwEUI,
-			row.AppEUI,
-			row.DevEUI,
-			row.RSSI,
-			decoded.RSSI,
-			decoded.Voltage)
-	}
 }
