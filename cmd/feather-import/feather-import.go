@@ -82,7 +82,7 @@ func main() {
 			"uplink_frequency," +
 			"uplink_modulation," +
 			"uplink_data_rate," +
-			"uplink_coding_rate" +
+			"uplink_coding_rate," +
 			"reception_unix," +
 			"reception_date," +
 			"reception_time," +
