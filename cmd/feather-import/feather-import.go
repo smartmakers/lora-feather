@@ -34,8 +34,8 @@ const InputTimeLayout = "2006/01/02 15:04:05"
 
 func init() {
 	now := time.Now()
-	since := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
-	until := since.Add(24 * time.Hour)
+	since := time.Date(now.Year(), now.Month(), now.Day(), 0, 1, 0, 0, now.Location())
+	until := since.Add(23*time.Hour + 58*time.Minute)
 
 	flag.BoolVar(&withoutHeader, "without-header", false, "Do not write the CSV header")
 	flag.StringVar(&sinceString, "since", since.Format(InputTimeLayout), "Since when to import the data")
@@ -49,11 +49,11 @@ func main() {
 	flag.Parse()
 
 	// Parse since/until time.
-	since, err := time.Parse(InputTimeLayout, sinceString)
+	since, err := time.ParseInLocation(InputTimeLayout, sinceString, time.Local)
 	if err != nil {
 		log.Fatal(err)
 	}
-	until, err := time.Parse(InputTimeLayout, untilString)
+	until, err := time.ParseInLocation(InputTimeLayout, untilString, time.Local)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -65,8 +65,8 @@ func main() {
 	}
 
 	db = db. // Period filter
-			Where("reception_time >= ?", since.UTC().Format("%2006-01-02%")).
-			Where("reception_time <= ?", until.UTC().Format("%2006-01-02%"))
+			Where("reception_time >= ?", since.UTC().Format("%2006-01-02T15:04:05%")).
+			Where("reception_time <= ?", until.UTC().Format("%2006-01-02T15:04:05%"))
 
 	// Fetch entries from database.
 	var uplinks []*uplinkEntry
