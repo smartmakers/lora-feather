@@ -16,11 +16,11 @@ platformio lib update
 #### Build and upload the project
 On a _Feather M0_:
 ```
-platformio run -e feather_32u4 -t upload
+platformio run -t upload
 ```
 On a _Feather 32u4_:
 ```
-platformio run -e feather_m0 -t upload
+platformio run -e feather_32u4 -t upload
 ```
 #### Monitor the device output
 ```
