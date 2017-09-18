@@ -157,6 +157,13 @@ void onEvent (ev_t ev) {
             LMIC_setupChannel(7, 867900000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(8, 868800000, DR_RANGE_MAP(DR_FSK,  DR_FSK),  BAND_MILLI);      // g2-band
 
+            // LMIC will go on with the scheduled transmission...
+            break;
+
+        case EV_JOIN_FAILED:
+            Print("EV_JOIN_FAILED");
+
+            // LMIC will try again automatically...
             break;
 
         case EV_TXSTART:
