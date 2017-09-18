@@ -32,15 +32,41 @@ void os_getDevKey(u1_t *buf) { memcpy_P(buf, APPKEY, 16); }
 const lmic_pinmap lmic_pins = {
         .nss = 8,
         .rxtx = LMIC_UNUSED_PIN,
-        .rst = 11,
-        .dio = {7, 5, LMIC_UNUSED_PIN},
+        .rst = PIN_RADIO_RST,
+        .dio = {PIN_RADIO_DIO0, 5, LMIC_UNUSED_PIN},
 };
+
+/* Print functions for debuging */
+
+void Print(const char c[]) {
+    Serial.print(c);
+}
+
+void Println(const char c[]) {
+    Serial.println(c);
+}
+
+void PrintTime() {
+    Serial.print(os_getTime());
+    Serial.print(": ");
+}
+
+void PrintWithTime(const char c[]) {
+    PrintTime();
+    Serial.print(c);
+}
+
+void PrintlnWithTime(const char c[]) {
+    PrintTime();
+    Serial.println(c);
+}
 
 // Status led pin.
 #define LED_STATUS 13
 
-// Battery voltage pin.
-#define PIN_BATTERY A9
+// Switch pins.
+#define SWITCH_INPUT A0
+#define SWITCH_HIGH A1
 
 static wave_generator_t* gen;
 
@@ -60,32 +86,12 @@ static uint8_t failed;
 static uint8_t data[2];
 static osjob_t job_transmit;
 
-void reset()
-{
-    Serial.print(os_getTime());
-    Serial.print(": ");
-    Serial.println("RESET");
-
-    // Reset failed transmissions.
-    failed = 0;
-    // Reset the MAC state.
-    LMIC_reset();
-    // Set clock error because of inaccurate clock.
-    LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
-    // Disable ADR (mobile).
-    LMIC_setAdrMode(0);
-    // Start join (OTAA).
-    LMIC_startJoining();
-}
-
 void jobTransmitCallback(osjob_t* j)
 {
     if (LMIC.opmode & OP_TXRXPEND) {
-        Serial.println(F("ERROR: OP_TXRXPEND, not sending"));
+        PrintlnWithTime("ERROR: OP_TXRXPEND, not sending");
     } else {
-
-        Serial.print(os_getTime());
-        Serial.println(F(": TXDATA"));
+        PrintlnWithTime("TXDATA");
 
         // Save battery level.
         // To decode on the server side:
@@ -97,19 +103,35 @@ void jobTransmitCallback(osjob_t* j)
         // radio.c (l.786), RFM95 (5.5.5, p82)
         data[1] = (uint8_t)(LMIC.rssi);
 
-        // Transmit encoded data (unconfirmed).
+        // Transmit encoded data (confirmed).
         LMIC_setTxData2(1, data, sizeof(data), 1);
     }
     // Next TX is scheduled after TX_COMPLETE event.
 }
 
+void reset()
+{
+    PrintlnWithTime("RESET");
+
+    // Reset failed transmissions.
+    failed = 0;
+    // Reset the MAC state.
+    LMIC_reset();
+    // Set clock error because of inaccurate clock.
+    LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
+    // Disable ADR (mobile).
+    LMIC_setAdrMode(0);
+
+    // Schedule first transmission (join will be called implicitly).
+    os_setCallback( &job_transmit, &jobTransmitCallback );
+}
+
 void onEvent (ev_t ev) {
-    Serial.print(os_getTime());
-    Serial.print(": ");
+    PrintTime();
     switch(ev) {
 
         case EV_JOINING:
-            Serial.println(F("EV_JOINING"));
+            Println("EV_JOINING");
 
             // Slow blinking while connecting.
             wave_generator_apply(gen, led_slow_blink);
@@ -117,7 +139,7 @@ void onEvent (ev_t ev) {
             break;
 
         case EV_JOINED:
-            Serial.println(F("EV_JOINED"));
+            Println("EV_JOINED");
 
             // Once connected blink make short blinks.
             wave_generator_apply(gen, led_short_blink);
@@ -136,13 +158,10 @@ void onEvent (ev_t ev) {
             LMIC_setupChannel(7, 867900000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(8, 868800000, DR_RANGE_MAP(DR_FSK,  DR_FSK),  BAND_MILLI);      // g2-band
 
-            // Schedule first transmission.
-            os_setCallback( &job_transmit, &jobTransmitCallback );
-
             break;
 
         case EV_TXSTART:
-            Serial.println(F("EV_TXSTART"));
+            Println("EV_TXSTART");
 
             // Fast blinking while trying to send something.
             wave_generator_apply(gen, led_fast_blink);
@@ -150,7 +169,7 @@ void onEvent (ev_t ev) {
             break;
 
         case EV_NORX:
-            Serial.println(F("EV_NORX"));
+            Println("EV_NORX");
 
             // Slow blinking until next start.
             wave_generator_apply(gen, led_slow_blink);
@@ -158,11 +177,11 @@ void onEvent (ev_t ev) {
             break;
 
         case EV_TXCOMPLETE:
-            Serial.print(F("EV_TXCOMPLETE : "));
+            Print("EV_TXCOMPLETE");
 
             // Check for received acknowledge.
             if (LMIC.txrxFlags & TXRX_ACK) {
-                Serial.println(F("ack"));
+                Println(": ack");
 
                 // While connected, short blink.
                 wave_generator_apply(gen, led_short_blink);
@@ -171,7 +190,7 @@ void onEvent (ev_t ev) {
                 failed = 0;
 
             } else {
-                Serial.println(F("no ack"));
+                Println(": no ack");
 
                 // Slow blinking while disconnected.
                 wave_generator_apply(gen, led_slow_blink);
@@ -186,14 +205,13 @@ void onEvent (ev_t ev) {
                     break;
                 }
             }
-
             // Schedule next transmission.
             os_setTimedCallback( &job_transmit, os_getTime() + sec2osticks(TRANSMIT_PERIOD), &jobTransmitCallback );
 
             break;
 
         default:
-            Serial.println(F("Unknown event"));
+            Println("unknown event");
             break;
     }
 }
@@ -203,6 +221,13 @@ void setup() {
 
     Serial.begin(9600);
     delay(100);
+
+    // Setup switch pins.
+    pinMode( SWITCH_INPUT, INPUT );
+    pinMode( SWITCH_HIGH, OUTPUT );
+
+    // Permanently set SWITCH_HIGH to HIGH.
+    digitalWrite( SWITCH_HIGH, HIGH );
 
     // Setup status/blink led.
     pinMode( LED_STATUS, OUTPUT );
@@ -215,7 +240,13 @@ void setup() {
 }
 
 void loop() {
-    os_runloop_once();
-    // Update status/blink leds.
-    digitalWrite( LED_STATUS, wave_generator_output( gen ) );
+    if (digitalRead(SWITCH_INPUT)==HIGH) {
+        // LMIC OS loop.
+        os_runloop_once();
+        // Update status/blink leds.
+        digitalWrite( LED_STATUS, wave_generator_output( gen ) );
+    } else {
+        // Turn led off.
+        digitalWrite( LED_STATUS, LOW );
+    }
 }
