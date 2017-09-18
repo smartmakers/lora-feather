@@ -20,7 +20,7 @@ static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0
 #define TRANSMIT_PERIOD 5
 
 // Number of failed transmissions before resetting.
-#define FAILED_TRANSMISSIONS_BEFORE_RESET 5
+#define FAILED_TRANSMISSIONS_BEFORE_RESET 15
 
 /* End of Parameters */
 
@@ -168,7 +168,7 @@ void onEvent (ev_t ev) {
                 wave_generator_apply(gen, led_short_blink);
 
                 // Reset failed counter.
-                // failed = 0;
+                failed = 0;
 
             } else {
                 Serial.println(F("no ack"));
@@ -177,11 +177,11 @@ void onEvent (ev_t ev) {
                 wave_generator_apply(gen, led_slow_blink);
 
                 // Increment failed counter.
-                // failed++;
+                failed++;
 
                 if (failed >= FAILED_TRANSMISSIONS_BEFORE_RESET) {
                     // Reset if failed too many times.
-                    // reset();
+                    reset();
 
                     break;
                 }
