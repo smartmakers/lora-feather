@@ -66,7 +66,6 @@ void PrintlnWithTime(const char c[]) {
 
 // Switch pins.
 #define SWITCH_INPUT A0
-#define SWITCH_HIGH A1
 
 static wave_generator_t* gen;
 
@@ -223,11 +222,7 @@ void setup() {
     delay(100);
 
     // Setup switch pins.
-    pinMode( SWITCH_INPUT, INPUT );
-    pinMode( SWITCH_HIGH, OUTPUT );
-
-    // Permanently set SWITCH_HIGH to HIGH.
-    digitalWrite( SWITCH_HIGH, HIGH );
+    pinMode( SWITCH_INPUT, INPUT_PULLUP );
 
     // Setup status/blink led.
     pinMode( LED_STATUS, OUTPUT );

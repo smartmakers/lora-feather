@@ -8,6 +8,11 @@ If you want to generate the *CMakeList* for CLion:
 ```
 platformio init
 ```
+#### Update the libraries
+Please do not forget this step before building:
+```
+platformio lib update
+```
 #### Build and upload the project
 On a _Feather M0_:
 ```
