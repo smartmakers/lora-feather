@@ -121,7 +121,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=LoRaLAB
+CMAKE_PROJECT_NAME:STATIC=loralab
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -183,6 +183,12 @@ ProcessorCount_cmd_getconf:FILEPATH=/usr/bin/getconf
 
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/sbin/sysctl
+
+//Value Computed by CMake
+loralab_BINARY_DIR:STATIC=/home/jacques/workspace/src/gitlab.com/smartmakers/lora-feather/platformio/loralab/cmake-build-debug
+
+//Value Computed by CMake
+loralab_SOURCE_DIR:STATIC=/home/jacques/workspace/src/gitlab.com/smartmakers/lora-feather/platformio/loralab
 
 
 ########################

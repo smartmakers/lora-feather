@@ -1,4 +1,4 @@
-## Periodic-Confirmed
+## LoRaLab
 
 #### Init the project
 ```

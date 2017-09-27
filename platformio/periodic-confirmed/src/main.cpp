@@ -36,7 +36,7 @@ const lmic_pinmap lmic_pins = {
         .dio = {PIN_RADIO_DIO0, 5, LMIC_UNUSED_PIN},
 };
 
-/* Print functions for debuging */
+/* Print functions for debugging */
 
 void Print(const char c[]) {
     Serial.print(c);

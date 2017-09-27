@@ -68,32 +68,34 @@ uint8_t makeHeader(uint8_t protocolVersion, uint8_t msgType)  {
     return protocolVersion << 5 | msgType;
 }
 
-void sendEmptyMsg()
+void sendEmptyMsg(u1_t confirmed)
 {
     headerOnly[0] = makeHeader(protocolVersion, emptyMsg);
+
     // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, headerOnly, sizeof(headerOnly), 1);
+    LMIC_setTxData2(1, headerOnly, sizeof(headerOnly), confirmed);
 }
 
-void sendZeros()
+void sendZeros(u1_t confirmed)
 {
     payload[0] = makeHeader(protocolVersion, zerosMsg);
     payload[1] = (uint8_t)(0);
     payload[2] = (uint8_t)(0);
 
-    // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, payload, 3, 1);
+    // Transmit encoded data.
+    LMIC_setTxData2(1, payload, 3, confirmed);
 }
 
-void sendHello()
+void sendHello(u1_t confirmed)
 {
     payload[0] = makeHeader(protocolVersion, helloMsg);
     memcpy(payload + 1, hello, sizeof(hello));
+
     // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, payload, sizeof(hello) + 1, 1);
+    LMIC_setTxData2(1, payload, sizeof(hello) + 1, confirmed);
 }
 
-void sendBatteryAndRSSI()
+void sendBatteryAndRSSI(u1_t confirmed)
 {
     payload[0] = makeHeader(protocolVersion, batteryAndRSSIMsg);
     // Save battery level.
@@ -107,39 +109,37 @@ void sendBatteryAndRSSI()
     payload[2] = (uint8_t)(LMIC.rssi);
 
     // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, payload, 3, 1);
+    LMIC_setTxData2(1, payload, 3, confirmed);
 }
 
-void sendInt32()
+void sendInt32(u1_t confirmed)
 {
     payload[0] = makeHeader(protocolVersion, int32Msg);
     // Copy data to send.
     memcpy(payload + 1, (uint8_t*)&int32Val, sizeof(int32Val));
 
     // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, payload, sizeof(int32Val) + 1, 1);
+    LMIC_setTxData2(1, payload, sizeof(int32Val) + 1, confirmed);
 }
 
-void sendFloat64()
+void sendFloat64(u1_t confirmed)
 {
     payload[0] = makeHeader(protocolVersion, float64Msg);
     // Copy data to send.
     memcpy(payload + 1, (uint8_t*)&float64Val, sizeof(float64Val));
 
     // Transmit encoded data (confirmed).
-    LMIC_setTxData2(1, payload, sizeof(float64Val) + 1, 1);
+    LMIC_setTxData2(1, payload, sizeof(float64Val) + 1, confirmed);
 }
 
 void reset()
 {
-  // Reset the MAC state.
-  LMIC_reset();
+    LMIC_reset();
 
-  // Set clock error because of inaccurate clock.
-  LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
-
-  // Disable ADR (mobile).
-  LMIC_setAdrMode(1);
+    // Enable ADR.
+    LMIC_setAdrMode(1);
+    // Set clock error because of inaccurate clock.
+    LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
 }
 
 void printDownlinkData() {
@@ -175,35 +175,32 @@ void jobTransmitCallback(osjob_t* j)
 
         switch (job_counter) {
             case emptyMsg:
-                sendEmptyMsg();
+                sendEmptyMsg(1);
                 break;
             case zerosMsg:
-                sendZeros();
+                sendZeros(0);
                 break;
             case helloMsg:
-                sendHello();
+                sendHello(1);
                 break;
             case batteryAndRSSIMsg:
-                sendBatteryAndRSSI();
+                sendBatteryAndRSSI(0);
                 break;
             case int32Msg:
-                sendInt32();
+                sendInt32(1);
                 break;
             case float64Msg:
-                sendFloat64();
+                sendFloat64(0);
                 break;
             default:
                 job_counter = 0;
 
 #ifdef OTAA
                 reset();
-
-                // Start join (OTAA).
-                LMIC_startJoining();
 #else
-                Serial.println("Skipping joining for abp devices");
-                os_setCallback( &job_transmit, &jobTransmitCallback );
+                Serial.println("Skip reset (abp device)");
 #endif
+                os_setCallback( &job_transmit, &jobTransmitCallback );
                 return;
         }
         job_counter += 1;
@@ -230,9 +227,6 @@ void onEvent (ev_t ev) {
 
             // Once connected blink make short blinks.
             wave_generator_apply(gen, led_short_blink);
-
-            // Schedule first transmission.
-            os_setCallback( &job_transmit, &jobTransmitCallback );
 
             break;
 
@@ -278,8 +272,6 @@ void onEvent (ev_t ev) {
         case EV_JOIN_FAILED:
             Serial.println(F("EV_JOIN_FAILED"));
 
-            // Try joining again.
-            LMIC_startJoining();
             break;
 
         default:
@@ -306,8 +298,6 @@ void setup() {
     reset();
 
 #ifdef OTAA
-    // Start join (OTAA).
-    LMIC_startJoining();
 #elif defined ABP
     // set the session and immediately start sending stuff
 #ifdef PROGMEM
@@ -319,10 +309,10 @@ void setup() {
 #else
     LMIC_setSession(0x1, DEVADDR, NWKSKEY, APPSKEY);
 #endif
-    os_setCallback( &job_transmit, &jobTransmitCallback );
 #else
 #error "Need OTAA or ABP set (or simply include the device's header file)"
 #endif
+    os_setCallback( &job_transmit, &jobTransmitCallback );
 }
 
 void loop() {

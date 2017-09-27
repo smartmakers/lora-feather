@@ -5,12 +5,11 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
-	"log"
 	"strings"
 	"text/template"
-	"strconv"
 
 	"github.com/pkg/errors"
 )
@@ -125,11 +124,13 @@ func createHeaderTemplate() *template.Template {
 	return tmpl
 }
 
-type activationType int;
+type activationType int
+
 const (
 	otaa activationType = iota
 	abp
 )
+
 func generateHeader(headerTmpl *template.Template, line []string, actType activationType) error {
 	filename := line[0] + ".h"
 
@@ -147,7 +148,7 @@ func generateHeader(headerTmpl *template.Template, line []string, actType activa
 		DevEUI  []string
 		AppEUI  []string
 		AppKey  []string
-		DevAddr int64
+		DevAddr string
 		NwkSKey []string
 		AppSKey []string
 	}{}
@@ -157,20 +158,14 @@ func generateHeader(headerTmpl *template.Template, line []string, actType activa
 		data.DevEUI = bytesToHexSlice(line[1], true)
 		data.AppEUI = bytesToHexSlice(line[2], true)
 		data.AppKey = bytesToHexSlice(line[3], false)
-		data.DevAddr = 0
 		data.NwkSKey = allZeroHexSlice(16)
 		data.AppSKey = allZeroHexSlice(16)
 	} else {
-		devAddr, err := strconv.ParseInt(line[1], 10, 32)
-		if err != nil {
-			return errors.Wrap(err, "cannot parse dev addr")
-		}
-
 		data.Mode = "ABP"
 		data.DevEUI = allZeroHexSlice(8)
 		data.AppEUI = allZeroHexSlice(8)
 		data.AppKey = allZeroHexSlice(16)
-		data.DevAddr = devAddr
+		data.DevAddr = string(line[1])
 		data.NwkSKey = bytesToHexSlice(line[2], false)
 		data.AppSKey = bytesToHexSlice(line[3], false)
 	}
@@ -184,7 +179,7 @@ func bytesToHexSlice(bytes string, invert bool) []string {
 
 	byteWrapper := "0x%s"
 	for i := 0; i != len(bytes)/2; i++ {
-		b := bytes[2*i: 2*i+2]
+		b := bytes[2*i : 2*i+2]
 		hexByte := fmt.Sprintf(byteWrapper, b)
 
 		if invert {
