@@ -22,7 +22,7 @@
 /* Behavior Parameters */
 
 // Minimum period between two data transmissions (seconds).
-#define TRANSMIT_PERIOD 52
+#define TRANSMIT_PERIOD 60
 
 /* End of Parameters */
 
@@ -84,6 +84,7 @@ uint8_t led_short_blink(uint32_t t) {
 }
 
 static uint8_t data[2];
+static ostime_t tx_start;
 static osjob_t job_transmit;
 
 void jobTransmitCallback(osjob_t* j)
@@ -166,6 +167,9 @@ void onEvent (ev_t ev) {
             // Fast blinking while trying to send something.
             wave_generator_apply(gen, led_fast_blink);
 
+            // Save the time of the tx start.
+            tx_start = os_getTime();
+
             break;
 
         case EV_TXCOMPLETE:
@@ -175,7 +179,7 @@ void onEvent (ev_t ev) {
             wave_generator_apply(gen, led_short_blink);
 
             // Schedule next transmission.
-            os_setTimedCallback( &job_transmit, os_getTime() + sec2osticks(TRANSMIT_PERIOD), &jobTransmitCallback );
+            os_setTimedCallback( &job_transmit, tx_start + sec2osticks(TRANSMIT_PERIOD), &jobTransmitCallback );
 
             break;
 
