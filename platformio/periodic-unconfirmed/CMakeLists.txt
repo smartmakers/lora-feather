@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(periodic-confirmed)
+project(periodic-unconfirmed)
 
 include(CMakeListsPrivate.txt)
 

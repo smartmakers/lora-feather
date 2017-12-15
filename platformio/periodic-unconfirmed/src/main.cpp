@@ -5,6 +5,8 @@
 
 /* LoRa Parameters */
 
+#ifndef GENERATED_LORA_PARAMETERS
+
 // DEVEUI: Unique device ID (LSBF)
 static const u1_t DEVEUI[8] PROGMEM = { 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
@@ -14,13 +16,12 @@ static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 // APPKEY: Device-specific AES key.
 static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
 
+#endif
+
 /* Behavior Parameters */
 
 // Minimum period between two data transmissions (seconds).
-#define TRANSMIT_PERIOD 5
-
-// Number of failed transmissions before resetting.
-#define FAILED_TRANSMISSIONS_BEFORE_RESET 15
+#define TRANSMIT_PERIOD 60
 
 /* End of Parameters */
 
@@ -64,7 +65,7 @@ void PrintlnWithTime(const char c[]) {
 // Status led pin.
 #define LED_STATUS 13
 
-// Switch pins.
+// Switch pin.
 #define SWITCH_INPUT A0
 
 static wave_generator_t* gen;
@@ -81,8 +82,7 @@ uint8_t led_short_blink(uint32_t t) {
     return wave_pwm( t, 2000, 50 );
 }
 
-static uint8_t failed;
-static uint8_t data[2];
+static uint8_t data[1];
 static osjob_t job_transmit;
 
 void jobTransmitCallback(osjob_t* j)
@@ -97,13 +97,8 @@ void jobTransmitCallback(osjob_t* j)
         // Voltage = Value * (2^3) * 3.3 / 1024;
         data[0] = (uint8_t)(analogRead(PIN_BATTERY) >> 2);
 
-        // Save last RSSI
-        // Actual RSSI: (Value - 64)
-        // radio.c (l.786), RFM95 (5.5.5, p82)
-        data[1] = (uint8_t)(LMIC.rssi);
-
-        // Transmit encoded data (confirmed).
-        LMIC_setTxData2(1, data, sizeof(data), 1);
+        // Transmit encoded data (unconfirmed).
+        LMIC_setTxData2(1, data, sizeof(data), 0);
     }
     // Next TX is scheduled after TX_COMPLETE event.
 }
@@ -112,8 +107,6 @@ void reset()
 {
     PrintlnWithTime("RESET");
 
-    // Reset failed transmissions.
-    failed = 0;
     // Reset the MAC state.
     LMIC_reset();
     // Set clock error because of inaccurate clock.
@@ -149,7 +142,7 @@ void onEvent (ev_t ev) {
             // Disable link check validation.
             LMIC_setLinkCheckMode(0);
 
-            // Manually setup additional channels (this is a hack, this should be done on the join accept).
+            // Manually setup additional channels (todo: this is a hack, this should be done on the join accept).
             LMIC_setupChannel(3, 867100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(4, 867300000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(5, 867500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
@@ -174,43 +167,12 @@ void onEvent (ev_t ev) {
 
             break;
 
-        case EV_NORX:
-            Println("EV_NORX");
-
-            // Slow blinking until next start.
-            wave_generator_apply(gen, led_slow_blink);
-
-            break;
-
         case EV_TXCOMPLETE:
-            Print("EV_TXCOMPLETE");
+            Println("EV_TXCOMPLETE");
 
-            // Check for received acknowledge.
-            if (LMIC.txrxFlags & TXRX_ACK) {
-                Println(": ack");
+            // Short blink until next transmission.
+            wave_generator_apply(gen, led_short_blink);
 
-                // While connected, short blink.
-                wave_generator_apply(gen, led_short_blink);
-
-                // Reset failed counter.
-                failed = 0;
-
-            } else {
-                Println(": no ack");
-
-                // Slow blinking while disconnected.
-                wave_generator_apply(gen, led_slow_blink);
-
-                // Increment failed counter.
-                failed++;
-
-                if (failed >= FAILED_TRANSMISSIONS_BEFORE_RESET) {
-                    // Reset if failed too many times.
-                    reset();
-
-                    break;
-                }
-            }
             // Schedule next transmission.
             os_setTimedCallback( &job_transmit, os_getTime() + sec2osticks(TRANSMIT_PERIOD), &jobTransmitCallback );
 
@@ -223,7 +185,10 @@ void onEvent (ev_t ev) {
 }
 
 void setup() {
- // while (!Serial);
+    // Uncomment this line if you want the Feather
+    // to wait  until the serial monitor is open on
+    // the computer before doing anything (debug).
+    //while (!Serial);
 
     Serial.begin(9600);
     delay(100);

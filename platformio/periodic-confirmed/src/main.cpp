@@ -64,7 +64,7 @@ void PrintlnWithTime(const char c[]) {
 // Status led pin.
 #define LED_STATUS 13
 
-// Switch pins.
+// Switch pin.
 #define SWITCH_INPUT A0
 
 static wave_generator_t* gen;
@@ -149,7 +149,7 @@ void onEvent (ev_t ev) {
             // Disable link check validation.
             LMIC_setLinkCheckMode(0);
 
-            // Manually setup additional channels (this is a hack, this should be done on the join accept).
+            // Manually setup additional channels (todo: this is a hack, this should be done on the join accept).
             LMIC_setupChannel(3, 867100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(4, 867300000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
             LMIC_setupChannel(5, 867500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
@@ -223,7 +223,10 @@ void onEvent (ev_t ev) {
 }
 
 void setup() {
- // while (!Serial);
+    // Uncomment this line if you want the Feather
+    // to wait  until the serial monitor is open on
+    // the computer before doing anything (debug).
+    //while (!Serial);
 
     Serial.begin(9600);
     delay(100);
