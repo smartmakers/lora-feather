@@ -7,6 +7,17 @@ platformio init --board feather32u4 --ide clion --project-option="lib_deps=git@g
  ```
 Then open the directory as a standard CLion project.
 
+## Generate the devices headers
+
+to generate the header files containing the devices LoRaWAN parameters (used in the projects `periodic-confirmed` and `periodic-unconfirmed`), first fill in a CSV file with your devices parameters (see `feathers.csv`), then run the following command: 
+
+```
+./build/generate-device-identifiers_linux --otaa-devices feathers.csv --out ./platformio/device-identifiers/
+``` 
+The headers are generated in `platformio/device-identifiers/` and can be imported in your project with: 
+```
+#include "../../device-identifiers/feather5.h".
+```
 ## Edit the LoRaWan Parameters
 
 Each device needs three parameters in order to be able to connect to the network. In order to better keep track of each device, it is recommended to write down those parameters on a label placed on the device itself.

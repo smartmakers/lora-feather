@@ -158,6 +158,7 @@ func generateHeader(headerTmpl *template.Template, line []string, actType activa
 		data.DevEUI = bytesToHexSlice(line[1], true)
 		data.AppEUI = bytesToHexSlice(line[2], true)
 		data.AppKey = bytesToHexSlice(line[3], false)
+		data.DevAddr = "00000000"
 		data.NwkSKey = allZeroHexSlice(16)
 		data.AppSKey = allZeroHexSlice(16)
 	} else {
