@@ -4,7 +4,7 @@
 #include <SPI.h>
 
 /* Device LoRaWAN Parameters */
-#include "../../device-identifiers/feather1.h"
+#include "../../device-identifiers/feather303.h"
 
 // Uncomment the following lines if you don't use
 // a generated header file for your device and want to
@@ -22,7 +22,7 @@
 /* Behavior Parameters */
 
 // Minimum period between two data transmissions (seconds).
-#define TRANSMIT_PERIOD 60
+#define TRANSMIT_PERIOD 52
 
 /* End of Parameters */
 
@@ -83,7 +83,7 @@ uint8_t led_short_blink(uint32_t t) {
     return wave_pwm( t, 2000, 50 );
 }
 
-static uint8_t data[1];
+static uint8_t data[2];
 static osjob_t job_transmit;
 
 void jobTransmitCallback(osjob_t* j)

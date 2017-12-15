@@ -4,7 +4,7 @@
 #include <SPI.h>
 
 /* Device LoRaWAN Parameters */
-#include "../../device-identifiers/feather1.h"
+#include "../../device-identifiers/feather305.h"
 
 // Uncomment the following lines if you don't use
 // a generated header file for your device and want to
