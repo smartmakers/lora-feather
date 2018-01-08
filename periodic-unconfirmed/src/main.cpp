@@ -4,25 +4,20 @@
 #include <SPI.h>
 
 /* Device LoRaWAN Parameters */
-#include "../../device-identifiers/feather303.h"
-
-// Uncomment the following lines if you don't use
-// a generated header file for your device and want to
-// specify the LoRaWan parameters manually.
 
 // DEVEUI: Unique device ID (LSBF)
-//static const u1_t DEVEUI[8] PROGMEM = { 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t DEVEUI[8] PROGMEM = { 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // APPEUI: Application ID (LSBF)
-//static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t APPEUI[8] PROGMEM = { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // APPKEY: Device-specific AES key.
-//static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
+static const u1_t APPKEY[16] PROGMEM = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
 
 /* Behavior Parameters */
 
 // Minimum period between two data transmissions (seconds).
-#define TRANSMIT_PERIOD 60
+#define TRANSMIT_PERIOD 30
 
 /* End of Parameters */
 
@@ -37,6 +32,12 @@ const lmic_pinmap lmic_pins = {
         .rst = PIN_RADIO_RST,
         .dio = {PIN_RADIO_DIO0, 5, LMIC_UNUSED_PIN},
 };
+
+// Status led pin.
+#define LED_STATUS 13
+
+// Switch pin.
+#define SWITCH_INPUT A0
 
 /* Print functions for debugging */
 
@@ -62,12 +63,6 @@ void PrintlnWithTime(const char c[]) {
     PrintTime();
     Serial.println(c);
 }
-
-// Status led pin.
-#define LED_STATUS 13
-
-// Switch pin.
-#define SWITCH_INPUT A0
 
 static wave_generator_t* gen;
 
