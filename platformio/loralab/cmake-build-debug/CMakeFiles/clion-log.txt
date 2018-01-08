@@ -1,4 +1,0 @@
-/opt/jetbrains/clion/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/jacques/workspace/src/gitlab.com/smartmakers/lora-feather/platformio/loralab
--- Configuring done
--- Generating done
--- Build files have been written to: /home/jacques/workspace/src/gitlab.com/smartmakers/lora-feather/platformio/loralab/cmake-build-debug

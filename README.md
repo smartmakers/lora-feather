@@ -1,5 +1,9 @@
 # LoRa Feather
 
+This repository contains [PlatformIO](http://platformio.org/) projects for both versions of the Adafruit LoRa Feather ([LoRa Feather 32u4](https://www.adafruit.com/product/3078)  and [LoRa Feather M0](https://www.adafruit.com/product/3178)). 
+
+**[periodic-confirmed](periodic-confirmed)**, **[periodic-unconfirmed](periodic-unconfirmed)** sends periodically a confirmed or unconfirmed payload (with the battery level and, in the confirmed case, the rssi value of the previous acknowledge).  
+
 ## Usage with PlatformIO and CLion
 Initialize the PlatformIO project using the following command;
  ```
@@ -7,17 +11,6 @@ platformio init --board feather32u4 --ide clion --project-option="lib_deps=git@g
  ```
 Then open the directory as a standard CLion project.
 
-## Generate the devices headers
-
-to generate the header files containing the devices LoRaWAN parameters (used in the projects `periodic-confirmed` and `periodic-unconfirmed`), first fill in a CSV file with your devices parameters (see `feathers.csv`), then run the following command: 
-
-```
-./build/generate-device-identifiers_linux --otaa-devices feathers.csv --out ./platformio/device-identifiers/
-``` 
-The headers are generated in `platformio/device-identifiers/` and can be imported in your project with: 
-```
-#include "../../device-identifiers/feather5.h".
-```
 ## Edit the LoRaWan Parameters
 
 Each device needs three parameters in order to be able to connect to the network. In order to better keep track of each device, it is recommended to write down those parameters on a label placed on the device itself.
